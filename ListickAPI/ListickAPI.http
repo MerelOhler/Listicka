@@ -1,0 +1,6 @@
+@ListickAPI_HostAddress = http://localhost:5298
+
+GET {{ListickAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
