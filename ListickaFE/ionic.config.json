@@ -1,0 +1,7 @@
+{
+  "name": "ListickaFE",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
