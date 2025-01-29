@@ -1,6 +1,7 @@
 using ListickAPI.Data;
 using ListickAPI.DataObjects;
 using ListickAPI.Entities;
+using ListickAPI.Services.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +10,10 @@ namespace ListickAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController(DataContext context) : BaseListickaController
+    public class AccountController(DataContext context, ITokenService tokenService) : BaseListickaController
     {
         [HttpPost("login")]
-        public async Task<ActionResult<LoginUser>> Login(LoginDto loginDto)
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await context.LoginUser.FirstOrDefaultAsync(u =>
                 u.UserName == loginDto.UserName.ToLower()
@@ -25,19 +26,24 @@ namespace ListickAPI.Controllers
             {
                 return Unauthorized("Invalid username or password");
             }
-            return Ok(user);
+            return Ok(
+                new UserDto { UserName = user.UserName, Token = tokenService.CreateToken(user) }
+            );
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<LoginUser>> Register(RegisterDto registerDto)
+        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             if (await UserExists(registerDto.UserName))
             {
                 return BadRequest("User already exists");
             }
 
-            byte[] passwordHash, passwordSalt;
-            CreatePasswordHash(registerDto.Password, out passwordHash, out passwordSalt);
+            CreatePasswordHash(
+                registerDto.Password,
+                out byte[] passwordHash,
+                out byte[] passwordSalt
+            );
             var user = new LoginUser
             {
                 UserName = registerDto.UserName,
@@ -48,7 +54,9 @@ namespace ListickAPI.Controllers
 
             context.LoginUser.Add(user);
             await context.SaveChangesAsync();
-            return Ok(user);
+            return Ok(
+                new UserDto { UserName = user.UserName, Token = tokenService.CreateToken(user) }
+            );
         }
 
         private void CreatePasswordHash(
