@@ -9,7 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ListickaConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ListickaConnection"))
+);
 
 builder.Services.AddCors();
 builder.Services.AddScoped<ITokenService, TokenService>();

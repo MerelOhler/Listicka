@@ -11,7 +11,8 @@ public class TokenService(IConfiguration config) : ITokenService
 {
     public string CreateToken(LoginUser user)
     {
-        string tokenKey = config["TokenKey"] ?? throw new Exception("Cannot access tokenKey from appsettings");
+        string tokenKey =
+            config["TokenKey"] ?? throw new Exception("Cannot access tokenKey from appsettings");
         if (tokenKey.Length < 64)
             throw new Exception("TokenKey must be at least 64 characters long");
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey));

@@ -21,16 +21,18 @@ namespace ListickAPI.Data.Migrations
                 name: "LoginUser",
                 columns: table => new
                 {
-                    LoginUserId = table.Column<int>(type: "int", nullable: false)
+                    LoginUserId = table
+                        .Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LoginUser", x => x.LoginUserId);
-                });
+                }
+            );
         }
     }
 }

@@ -10,7 +10,8 @@ namespace ListickAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController(DataContext context, ITokenService tokenService) : BaseListickaController
+    public class AccountController(DataContext context, ITokenService tokenService)
+        : BaseListickaController
     {
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
