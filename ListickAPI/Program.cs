@@ -1,19 +1,12 @@
-using ListickAPI.Data;
-using ListickAPI.Services;
-using ListickAPI.Services.IServices;
-using Microsoft.EntityFrameworkCore;
+using ListickAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ListickaConnection"))
-);
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
 
-builder.Services.AddCors();
-builder.Services.AddScoped<ITokenService, TokenService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,6 +16,10 @@ app.UseCors(builder =>
         .AllowAnyHeader()
         .WithOrigins("http://localhost:4200", "https://localhost:4200")
 );
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
