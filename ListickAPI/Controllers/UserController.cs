@@ -8,7 +8,7 @@ namespace ListickAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController(DataContext context) : ControllerBase
+    public class UserController(DataContext context) : BaseListickaController
     {
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LoginUser>>> Get()
