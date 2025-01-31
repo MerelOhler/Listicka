@@ -1,0 +1,32 @@
+ion-header {
+    height: 10rem;
+    div.bg {
+        height: 10rem;
+        width: 130%;
+        background: linear-gradient(90deg, aqua 0%, #FF9800 100%);
+        transform: rotate(-15deg);
+        border-radius: 10px 10px 10px 50px;
+        margin-top: -3rem;
+        margin-left: -1rem;
+        box-shadow: 0 1px 10px rgba(255,98,169,0.5);
+    }
+    ion-item {
+        --background: transparent;
+        position: absolute;
+        top: .5rem;
+        left: 0;
+        border: none;
+        ion-label {
+            color: white;
+            font-weight: bold;
+        }
+        ion-avatar {
+            height: 5rem;
+            width: 5rem;
+            margin-left: 1rem;
+            margin-top: 1rem;
+            border: 2px solid aqua
+        }
+    }
+
+}

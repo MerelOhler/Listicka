@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonList,
   IonItem,
   IonLabel,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonMenuButton,
 } from '@ionic/angular/standalone';
 import { UserService } from '../services/specific/user.service';
 import { NgIf } from '@angular/common';
@@ -16,13 +18,15 @@ import { NgIf } from '@angular/common';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   imports: [
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonContent,
     IonList,
     IonItem,
     IonLabel,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonMenuButton,
     NgIf,
   ],
 })
