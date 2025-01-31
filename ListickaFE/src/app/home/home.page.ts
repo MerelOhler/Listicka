@@ -9,9 +9,12 @@ import {
   IonTitle,
   IonButtons,
   IonMenuButton,
+  IonButton,
+  IonIcon,
 } from '@ionic/angular/standalone';
 import { UserService } from '../services/specific/user.service';
 import { NgIf } from '@angular/common';
+import { ThemeService } from '../services/general/theme.service';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +30,8 @@ import { NgIf } from '@angular/common';
     IonTitle,
     IonButtons,
     IonMenuButton,
+    IonButton,
+    IonIcon,
     NgIf,
   ],
 })
@@ -36,7 +41,10 @@ export class HomePage implements OnInit {
   user: any;
   isLoading = true;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private themeService: ThemeService
+  ) {}
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe({
@@ -63,5 +71,9 @@ export class HomePage implements OnInit {
         this.isLoading = false;
       },
     });
+  }
+
+  changeTheme() {
+    this.themeService.setTheme({});
   }
 }
