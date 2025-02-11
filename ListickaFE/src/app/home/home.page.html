@@ -1,24 +1,4 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>
-      Listicka
-    </ion-title>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-      <ion-button (click)="changeTheme()">
-        lalala
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
 <ion-content [fullscreen]="true">
-
-  <ion-buttons slot="end">
-    <ion-button (click)="changeTheme()">
-      huhuhu
-      <ion-icon slot="icon-only" name="refresh"></ion-icon>
-    </ion-button>
-  </ion-buttons>
   <div id="container" *ngIf="!isLoading">
     <h1>Users</h1>
     
