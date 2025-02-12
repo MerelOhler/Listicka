@@ -1,36 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonList,
   IonItem,
   IonLabel,
 } from '@ionic/angular/standalone';
 import { UserService } from '../services/specific/user.service';
-import { NgIf } from '@angular/common';
+import { NgIf, CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
-  imports: [
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonList,
-    IonItem,
-    IonLabel,
-    NgIf,
-  ],
+  styleUrls: ['home.page.css'],
+  imports: [IonContent, IonList, IonItem, IonLabel, NgIf, CurrencyPipe],
 })
 export class HomePage implements OnInit {
-  title = 'ListickaFE';
+  title = 'Listicka';
   users: any;
   user: any;
   isLoading = true;
+  cost = 123.45;
 
   constructor(private userService: UserService) {}
 
@@ -43,7 +32,6 @@ export class HomePage implements OnInit {
         console.error(error);
       },
       complete: () => {
-        console.log('complete');
       },
     });
 
@@ -55,7 +43,6 @@ export class HomePage implements OnInit {
         console.error(error);
       },
       complete: () => {
-        console.log('complete');
         this.isLoading = false;
       },
     });

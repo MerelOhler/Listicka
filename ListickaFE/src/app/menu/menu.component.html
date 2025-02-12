@@ -1,0 +1,32 @@
+<ion-menu contentId="main-content" type="overlay" side="end">
+  <ion-header class="ion-no-border">
+    <div class="bg"></div>
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <img src="assets/img/avatar.jpg" alt="">
+      </ion-avatar>
+      <ion-label>
+        {{userProfile.name}}
+        <p ellipsis="true">
+          <ion-text color="light">{{userProfile.email}}</ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-header>
+
+  <ion-content>
+
+    @for(page of pages(); track $index) {
+    <div class="menu-item">
+      <ion-menu-toggle>
+        <ion-item button lines="none" [ngClass]="{'selected': page.active}" (click)="onItemSelected(page)">
+          <fa-icon [icon]="page.icon"></fa-icon>
+          <ion-label>
+            {{page.title}}
+          </ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+    </div>
+    }
+  </ion-content>
+</ion-menu>
