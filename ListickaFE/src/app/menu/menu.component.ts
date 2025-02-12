@@ -2,6 +2,7 @@ import {
   Component,
   computed,
   OnInit,
+  signal,
   Signal,
   ViewEncapsulation,
 } from '@angular/core';
@@ -24,9 +25,9 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgClass } from '@angular/common';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs';
+import { Router } from '@angular/router';
 import { AppTranslateService } from '../services/general/app-translate.service';
+import { RouterHelperService } from '../services/general/router-helper.service';
 
 @Component({
   selector: 'menu',
@@ -53,27 +54,35 @@ export class MenuComponent implements OnInit {
   faUser = faUser;
   faBullhorn = faBullhorn;
   faArrowRightFromBracket = faArrowRightFromBracket;
+  homeActive = signal(false);
+  profileActive = signal(false);
+  translateActive = signal(false);
+  logoutActive = signal(false);
 
   public pages: Signal<any> = computed(() => [
     {
+      name: 'home',
       title: this.translate.home(),
       icon: faHouse,
       url: '/home',
-      active: false,
+      active: this.homeActive(),
     },
     {
+      name: 'profile',
       title: this.translate.profile(),
       icon: faUser,
       url: '/profile',
-      active: false,
+      active: this.profileActive(),
     },
     {
+      name: 'translate',
       title: this.translate.translate(),
       icon: faBullhorn,
       url: '/translate',
-      active: false,
+      active: this.translateActive(),
     },
     {
+      name: 'logout',
       title: 'Logout',
       icon: faArrowRightFromBracket,
       url: '',
@@ -81,7 +90,7 @@ export class MenuComponent implements OnInit {
     },
   ]);
 
-  profile = {
+  userProfile = {
     name: 'John Doe',
     email: 'asdf',
   };
@@ -90,37 +99,33 @@ export class MenuComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private translate: AppTranslateService
+    private translate: AppTranslateService,
+    private routerHelper: RouterHelperService
   ) {}
 
   ngOnInit() {
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        const activeRoute = this.route.root;
-        // const indexActivePage = this.pages.findIndex(
-        //   (a: any) => a.url === '/' + this.getActiveRoute(activeRoute)
-        // );
-        // if (indexActivePage >= 0) {
-        //   this.pages[indexActivePage].active = true;
-        // } else this.pages[0].active = true;
-      });
+    const indexActivePage = this.pages().findIndex(
+      (a: any) => a.url === this.routerHelper.getActiveRoute()
+    );
+    if (indexActivePage >= 0) {
+      (this as any)[this.pages()[indexActivePage].name + 'Active'].set(true);
+    } else {
+      this.setRouteToHome();
+    }
     this.setMenuValues();
   }
 
-  getActiveRoute(route: ActivatedRoute): string {
-    while (route.firstChild) {
-      route = route.firstChild;
-    }
-    return route.snapshot.url.join('/');
+  setRouteToHome() {
+    this.router.navigate(['/home']);
+    this.homeActive.set(true);
   }
+
   onItemSelected(page: any) {
     if (!page.active) {
-      // const indexActivePage = this.pages.findIndex((a: any) => a.active);
-      // if (indexActivePage >= 0) {
-      //   this.pages[indexActivePage].active = false;
-      // }
+      const indexActivePage = this.pages().findIndex((a: any) => a.active);
+      if (indexActivePage >= 0) {
+        this.pages()[indexActivePage].active = false;
+      }
       page.active = true;
     }
     this.router.navigate([page.url]);
