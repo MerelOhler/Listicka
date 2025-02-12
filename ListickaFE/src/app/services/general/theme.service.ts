@@ -54,8 +54,8 @@ function CSSTextGenerator(colors: any) {
     --ion-text-color: ${dark};
     --ion-toolbar-background-color: ${contrast(light)};
     --ion-toolbar-text-color: ${contrast(dark)};
-    --ion-item-background: ${contrast(light, 0.3)};
-    --ion-item-text-color: ${contrast(dark, 0.3)};
+    --ion-input-background-color: ${contrast(light, 0.3)};
+    --ion-input-text-color: ${contrast(dark, 0.3)};
 
     --ion-color-primary: ${primary};
     --ion-color-primary-rgb: 95, 15, 64;

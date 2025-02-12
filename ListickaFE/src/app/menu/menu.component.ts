@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  computed,
+  OnInit,
+  Signal,
+  ViewEncapsulation,
+} from '@angular/core';
 import {
   IonHeader,
   IonMenu,
@@ -20,6 +26,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgClass } from '@angular/common';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
+import { AppTranslateService } from '../services/general/app-translate.service';
 
 @Component({
   selector: 'menu',
@@ -47,23 +54,23 @@ export class MenuComponent implements OnInit {
   faBullhorn = faBullhorn;
   faArrowRightFromBracket = faArrowRightFromBracket;
 
-  public pages: any = [
+  public pages: Signal<any> = computed(() => [
     {
-      title: 'Home',
+      title: this.translate.home(),
       icon: faHouse,
       url: '/home',
       active: false,
     },
     {
-      title: 'Profile',
+      title: this.translate.profile(),
       icon: faUser,
       url: '/profile',
       active: false,
     },
     {
-      title: 'Announcement',
+      title: this.translate.translate(),
       icon: faBullhorn,
-      url: '/announcement',
+      url: '/translate',
       active: false,
     },
     {
@@ -72,25 +79,34 @@ export class MenuComponent implements OnInit {
       url: '',
       active: false,
     },
-  ];
+  ]);
 
   profile = {
     name: 'John Doe',
     email: 'asdf',
   };
+  title: string = 'Listicka';
+  huhu: any;
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private translate: AppTranslateService
+  ) {}
 
   ngOnInit() {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         const activeRoute = this.route.root;
-        const indexActivePage = this.pages.findIndex(
-          (a: any) => a.url === '/' + this.getActiveRoute(activeRoute)
-        );
-        this.pages[indexActivePage].active = true;
+        // const indexActivePage = this.pages.findIndex(
+        //   (a: any) => a.url === '/' + this.getActiveRoute(activeRoute)
+        // );
+        // if (indexActivePage >= 0) {
+        //   this.pages[indexActivePage].active = true;
+        // } else this.pages[0].active = true;
       });
+    this.setMenuValues();
   }
 
   getActiveRoute(route: ActivatedRoute): string {
@@ -101,10 +117,16 @@ export class MenuComponent implements OnInit {
   }
   onItemSelected(page: any) {
     if (!page.active) {
-      const indexActivePage = this.pages.findIndex((a: any) => a.active);
-      this.pages[indexActivePage].active = false;
+      // const indexActivePage = this.pages.findIndex((a: any) => a.active);
+      // if (indexActivePage >= 0) {
+      //   this.pages[indexActivePage].active = false;
+      // }
       page.active = true;
     }
     this.router.navigate([page.url]);
+  }
+
+  setMenuValues() {
+    this.translate.setLanguage('cs');
   }
 }

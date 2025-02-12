@@ -1,15 +1,17 @@
 <ion-content [fullscreen]="true">
   <div id="container" *ngIf="!isLoading">
     <h1>Users</h1>
-    
+
     <ion-list>
       @for (user of users; track $index) {
-        <ion-item>
-          <ion-label>{{user.email}}</ion-label>
-        </ion-item>
+      <ion-item>
+        <p>username </p>
+        <ion-label>{{user.email}}</ion-label>
+      </ion-item>
       }
     </ion-list>
 
     <h1>{{user.email}} - {{user.passwordHash}}</h1>
+    <p>{{cost | currency}}</p>
   </div>
 </ion-content>

@@ -1,4 +1,4 @@
- <ion-menu contentId="main-content" type="overlay">
+<ion-menu contentId="main-content" type="overlay">
   <ion-header class="ion-no-border">
     <div class="bg"></div>
     <ion-item lines="none">
@@ -15,17 +15,18 @@
   </ion-header>
 
   <ion-content>
-    @for(page of pages; track $index) {
-      <div class="menu-item">
-        <ion-menu-toggle>
-          <ion-item button lines="none" [ngClass]="{'selected': page.active}" (click)="onItemSelected(page)">
-            <fa-icon [icon]="page.icon"></fa-icon>
-            <ion-label>
-              {{page.title}}
-            </ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-      </div>
+
+    @for(page of pages(); track $index) {
+    <div class="menu-item">
+      <ion-menu-toggle>
+        <ion-item button lines="none" [ngClass]="{'selected': page.active}" (click)="onItemSelected(page)">
+          <fa-icon [icon]="page.icon"></fa-icon>
+          <ion-label>
+            {{page.title}}
+          </ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+    </div>
     }
   </ion-content>
-</ion-menu> 
+</ion-menu>

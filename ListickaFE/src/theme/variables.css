@@ -63,4 +63,8 @@
 	--ion-color-dark-shade: #292929;
 	--ion-color-dark-tint: #444444;
 
+	--ion-input-primary-background: #ffffff;
+	--ion-input-primary-border: #f6f6f6;
+	--ion-input-primary-text: #000000;
+
 }
