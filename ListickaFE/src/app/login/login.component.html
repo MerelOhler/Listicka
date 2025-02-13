@@ -1,0 +1,50 @@
+<ion-card *ngIf="!loading">
+  <ion-card-header>
+    <ion-card-title>{{register? ('Register' | translate) : ('Login' | translate)}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-list>
+      <ion-item lines="none">
+        <ion-label position="floating">{{'Email' | translate}}</ion-label>
+        <ion-input type="email" [formControl]="email" placeholder="email@listicka.com"
+          errorText="{{'Invalid email'| translate}}" [clearOnEdit]="false"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">{{'Password' | translate}}</ion-label>
+        <ion-input type="password" [formControl]="password" placeholder="*****"
+          errorText="{{'Invalid password'| translate}}" [clearOnEdit]="false">
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
+        <div *ngIf="password?.dirty && register && password.invalid">
+          <p class="block" [ngClass]="password.value?.match('^(?=.*[A-Z])') ? 'invalid' : 'valid'">
+            {{'MissingUpperCase'| translate}}
+          </p>
+          <p class="block" [ngClass]="password.value?.match('(?=.*[a-z])') ? 'invalid' : 'valid'">
+            {{'MissingLowerCase' | translate}}</p>
+          <p class="block" [ngClass]="password.value?.match('(.*[0-9].*)') ? 'invalid' : 'valid'">
+            {{'MissingDigit'| translate}}</p>
+          <p class="block" [ngClass]="password.value?.match('(?=.*[!@#$%^&*])') ? 'invalid' : 'valid'">
+            {{'MissingSpecial'|translate}}</p>
+          <p class="block" [ngClass]="password.value?.match('.{8,}') ? 'invalid' : 'valid'">
+            {{'LessThan8Chars' | translate}}</p>
+        </div>
+      </ion-item>
+      <ion-item lines="none" *ngIf="register">
+        <ion-label position="floating">{{'Confirm' | translate}}</ion-label>
+        <ion-input type="password" [formControl]="confirmPassword" placeholder="*****"
+          errorText="{{'Passwords do not match'| translate}}" [clearOnEdit]="false">
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-button *ngIf="!register" expand="block" (click)="loginUser()">{{'Login' | translate}}</ion-button>
+    <ion-button *ngIf="register" [disabled]="password.valid && email.valid && confirmPassword.valid ? null : true"
+      expand="block" (click)="registerUser()">{{'Register' | translate}}</ion-button>
+    <a *ngIf="!register" (click)="register = true">{{'Register' | translate}}</a>
+    <a *ngIf="register" (click)="register = false">{{'Login' | translate}}</a>
+
+  </ion-card-content>
+</ion-card>

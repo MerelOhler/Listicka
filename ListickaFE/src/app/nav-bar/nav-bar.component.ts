@@ -8,6 +8,7 @@ import {
 } from '@ionic/angular/standalone';
 import { ThemeService } from '../services/general/theme.service';
 import { AppTranslateService } from '../services/general/app-translate.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'nav-bar',
@@ -20,7 +21,7 @@ export class NavBarComponent implements OnInit {
   title = `Listicka`;
   profile = { name: 'John Doe', email: 'asdf@asdf.com' };
 
-  constructor(private themeService: ThemeService, private translate: AppTranslateService) {}
+  constructor(private themeService: ThemeService, private translate: AppTranslateService, private router: Router) {}
 
   ngOnInit() {}
 
@@ -31,4 +32,7 @@ export class NavBarComponent implements OnInit {
     this.translate.setLanguage('en');
   }
 
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
 }

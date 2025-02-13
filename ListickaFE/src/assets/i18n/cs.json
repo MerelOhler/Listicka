@@ -1,6 +1,22 @@
 {
+	"Confirm": "Potvrdit",
+	"confirmPassword": "Potvrdit heslo",
+	"Email": "E-mail",
 	"home": "Doma",
+	"Invalid email": "Neplatný email",
+	"Invalid password": "Neplatné heslo",
+	"LessThan8Chars": "Minimálně 8 znaků.",
 	"Listicka": "Lištička",
+	"Login": "Přihlásit se",
+	"MissingDigit": "Alespoň jedna číslice.",
+	"MissingLowerCase": "Alespoň jedno malé písmeno.",
+	"MissingSpecial": "Alespoň jeden speciální znak.",
+	"MissingUpperCase": "Alespoň jedno tiskací písmeno.",
+	"password": "",
+	"Password": "Heslo",
+	"Passwords do not match": "Hesla nejsou stejná",
 	"profile": "Profil",
-	"translate": "Přeložit"
+	"Register": "Zaregistrovat",
+	"translate": "Přeložit",
+	"Username": "Email"
 }

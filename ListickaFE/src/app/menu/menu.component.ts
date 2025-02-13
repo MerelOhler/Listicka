@@ -110,7 +110,9 @@ export class MenuComponent implements OnInit {
     if (indexActivePage >= 0) {
       (this as any)[this.pages()[indexActivePage].name + 'Active'].set(true);
     } else {
-      this.setRouteToHome();
+      if (this.routerHelper.getActiveRoute() === '') {
+        this.setRouteToHome();
+      }
     }
     this.setMenuValues();
   }

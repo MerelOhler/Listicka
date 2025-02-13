@@ -1,6 +1,22 @@
 {
+	"Confirm": "Confirm",
+	"confirmPassword": "Confirm password",
+	"Email": "Email",
 	"home": "Home",
+	"Invalid email": "Invalid email",
+	"Invalid password": "Invalid password",
+	"LessThan8Chars": "At least 8 characters long.",
 	"Listicka": "Listicka",
+	"Login": "Login",
+	"MissingDigit": "At least one digit.",
+	"MissingLowerCase": "At least one lowercase letter.",
+	"MissingSpecial": "At least one special character.",
+	"MissingUpperCase": "At least one uppercase letter.",
+	"password": "",
+	"Password": "Password",
+	"Passwords do not match": "Passwords do not match",
 	"profile": "Profile",
-	"translate": "Translate"
+	"Register": "Register",
+	"translate": "Translate",
+	"Username": "Email"
 }
