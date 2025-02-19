@@ -5,6 +5,7 @@
 	"home": "Doma",
 	"Invalid email": "Neplatný email",
 	"Invalid password": "Neplatné heslo",
+	"Invalid username or password": "Neplatné uživatelské jméno nebo heslo",
 	"LessThan8Chars": "Minimálně 8 znaků.",
 	"Listicka": "Lištička",
 	"Login": "Přihlásit se",
@@ -17,6 +18,7 @@
 	"Passwords do not match": "Hesla nejsou stejná",
 	"profile": "Profil",
 	"Register": "Zaregistrovat",
+	"Registration successful": "Registrace je potvrzena",
 	"translate": "Přeložit",
 	"Username": "Email"
 }

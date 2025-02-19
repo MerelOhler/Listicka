@@ -5,6 +5,7 @@
 	"home": "Home",
 	"Invalid email": "Invalid email",
 	"Invalid password": "Invalid password",
+	"Invalid username or password": "Invalid username or password",
 	"LessThan8Chars": "At least 8 characters long.",
 	"Listicka": "Listicka",
 	"Login": "Login",
@@ -17,6 +18,7 @@
 	"Passwords do not match": "Passwords do not match",
 	"profile": "Profile",
 	"Register": "Register",
+	"Registration successful": "Registration successful",
 	"translate": "Translate",
 	"Username": "Email"
 }

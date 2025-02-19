@@ -26,8 +26,8 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
-import { AppTranslateService } from '../services/general/app-translate.service';
-import { RouterHelperService } from '../services/general/router-helper.service';
+import { AppTranslateService } from '../_services/general/app-translate.service';
+import { RouterHelperService } from '../_services/general/router-helper.service';
 
 @Component({
   selector: 'menu',

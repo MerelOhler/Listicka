@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   IonCard,
   IonCardContent,
@@ -10,12 +10,14 @@ import {
   IonInput,
   IonButton,
   IonInputPasswordToggle,
+  ToastController,
 } from '@ionic/angular/standalone';
 import { TranslateModule } from '@ngx-translate/core';
 import { Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { NgClass, NgIf } from '@angular/common';
-import { LoginService } from '../services/specific/login.service';
+import { LoginService } from '../_services/specific/login.service';
 import { Router } from '@angular/router';
+import { AppTranslateService } from '../_services/general/app-translate.service';
 
 export const StrongPasswordRegx: RegExp =
   /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
@@ -62,7 +64,10 @@ export class LoginComponent implements OnInit {
     Validators.minLength(6),
   ]);
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  loginService = inject(LoginService);
+  appTranslateService = inject(AppTranslateService);
+  router = inject(Router);
+  toast = inject(ToastController);
 
   ngOnInit() {
     this.confirmPassword.setValidators(this.passwordConfirming);
@@ -100,6 +105,11 @@ export class LoginComponent implements OnInit {
             console.log(response);
             if (response.status === 200) {
               console.log('registration successful');
+              this.appTranslateService
+                .getTranslation('Registration successful')
+                .subscribe((response) => {
+                  this.presentToast(true, response);
+                });
               this.router.navigate(['home']);
             } else {
               this.handleError(response);
@@ -123,8 +133,31 @@ export class LoginComponent implements OnInit {
   }
 
   handleError(error: any) {
-    console.error(error);
-    //TODO: handle error
+    if (error.data === '') {
+      this.appTranslateService
+        .getTranslation('Something went wrong, please try again')
+        .subscribe((response) => {
+          this.presentToast(false, response);
+        });
+    } else {
+      console.log(error.data);
+      this.appTranslateService
+        .getTranslation(error.data)
+        .subscribe((response) => {
+          this.presentToast(false, response);
+        });
+    }
+  }
+
+  async presentToast(positive: boolean, message: string) {
+    const toast = await this.toast.create({
+      message: message,
+      duration: 1500,
+      position: 'top',
+      color: positive ? 'success' : 'danger',
+    });
+
+    await toast.present();
   }
 
   passwordConfirming = () => {

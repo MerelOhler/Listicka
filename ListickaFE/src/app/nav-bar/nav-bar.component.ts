@@ -6,8 +6,8 @@ import {
   IonButtons,
   IonButton,
 } from '@ionic/angular/standalone';
-import { ThemeService } from '../services/general/theme.service';
-import { AppTranslateService } from '../services/general/app-translate.service';
+import { ThemeService } from '../_services/general/theme.service';
+import { AppTranslateService } from '../_services/general/app-translate.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,7 +21,11 @@ export class NavBarComponent implements OnInit {
   title = `Listicka`;
   profile = { name: 'John Doe', email: 'asdf@asdf.com' };
 
-  constructor(private themeService: ThemeService, private translate: AppTranslateService, private router: Router) {}
+  constructor(
+    private themeService: ThemeService,
+    private translate: AppTranslateService,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
