@@ -6,9 +6,7 @@
     <ion-button (click)="changeTheme()">
       Theme
     </ion-button>
-    <ion-button (click)="changeLanguage()">
-      English
-    </ion-button>
+    <l-language-switcher></l-language-switcher>
     @if(!profile()){
     <ion-button (click)="goToLogin(true)">
       Login

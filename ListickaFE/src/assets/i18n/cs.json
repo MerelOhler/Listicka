@@ -10,6 +10,7 @@
 	"LessThan8Chars": "Minimálně 8 znaků.",
 	"Listicka": "Lištička",
 	"Login": "Přihlásit se",
+	"logout": "Odhlásit",
 	"MissingDigit": "Alespoň jedna číslice.",
 	"MissingLowerCase": "Alespoň jedno malé písmeno.",
 	"MissingSpecial": "Alespoň jeden speciální znak.",
@@ -24,5 +25,6 @@
 	"Something went wrong": "Něco se pokazilo",
 	"Something went wrong, please try again": "Něco se pokazilo, zkuste to prosím znovu",
 	"translate": "Přeložit",
-	"Username": "Email"
+	"Username": "E-mail",
+	"Users": "Uživatelé"
 }

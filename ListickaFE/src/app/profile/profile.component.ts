@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-profile',
+  selector: 'l-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
   imports: [IonContent],

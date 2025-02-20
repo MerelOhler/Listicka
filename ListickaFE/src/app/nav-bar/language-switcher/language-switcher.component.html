@@ -1,0 +1,9 @@
+<ion-button>
+  <fa-icon [icon]="faGlobe"></fa-icon>
+
+  <ion-select value="{{selectedLanguage()}}" (ionChange)="changeLanguage($event)" interface="popover">
+    @for(language of languages; track $index){
+    <ion-select-option value="{{language.code}}">{{language.name}}</ion-select-option>
+    }
+  </ion-select>
+</ion-button>

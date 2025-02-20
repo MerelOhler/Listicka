@@ -1,0 +1,9 @@
+ion-select::part(label) {
+    content: faLanguage;
+    width: 24px;
+  }
+
+  fa-icon {
+    margin-right: .5rem;
+    font-size: 1rem;
+}

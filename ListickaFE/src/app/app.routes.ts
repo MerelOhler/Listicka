@@ -5,7 +5,6 @@ import { LoginComponent } from './login/login.component';
 import { TodoListComponent } from './todo/list/todo-list/todo-list.component';
 import { TodoCreateComponent } from './todo/create/todo-create/todo-create.component';
 import { TodoItemComponent } from './todo/item/todo-item/todo-item.component';
-import path from 'path';
 
 export const routes = [
   { path: 'home', component: HomePage },
@@ -16,5 +15,4 @@ export const routes = [
   { path: 'todo', component: TodoListComponent },
   { path: 'todo/create', component: TodoCreateComponent },
   { path: 'todo/:id', component: TodoItemComponent },
-  { path: '**', component: HomePage, pathMatch: 'full' }
 ];

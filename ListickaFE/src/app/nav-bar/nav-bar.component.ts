@@ -10,12 +10,13 @@ import { ThemeService } from '../_services/general/theme.service';
 import { AppTranslateService } from '../_services/general/app-translate.service';
 import { Router } from '@angular/router';
 import { UserService } from '../_services/specific/user.service';
+import { LanguageSwitcherComponent } from "./language-switcher/language-switcher.component";
 
 @Component({
-  selector: 'nav-bar',
+  selector: 'l-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css'],
-  imports: [IonMenuButton, IonToolbar, IonTitle, IonButtons, IonButton],
+  imports: [IonMenuButton, IonToolbar, IonTitle, IonButtons, IonButton, LanguageSwitcherComponent],
   standalone: true,
 })
 export class NavBarComponent implements OnInit {

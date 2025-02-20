@@ -33,7 +33,7 @@ import { UserService } from '../_services/specific/user.service';
 import { filter, Subscription } from 'rxjs';
 
 @Component({
-  selector: 'menu',
+  selector: 'l-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
   encapsulation: ViewEncapsulation.Emulated,
@@ -95,7 +95,7 @@ export class MenuComponent implements OnInit {
     },
     {
       name: 'logout',
-      title: 'Logout',
+      title: this.translate.logout(),
       icon: faArrowRightFromBracket,
       url: '',
       active: false,
