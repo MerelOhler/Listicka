@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-translate',
+  selector: 'l-translate',
   templateUrl: './translate.component.html',
   styleUrls: ['./translate.component.css'],
   imports: [TranslateModule],

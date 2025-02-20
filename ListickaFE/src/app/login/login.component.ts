@@ -26,7 +26,7 @@ export const emailRegex: RegExp =
   /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 @Component({
-  selector: 'app-login',
+  selector: 'l-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   imports: [

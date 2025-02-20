@@ -16,8 +16,15 @@ export class AppTranslateService {
   language = signal('en');
 
   constructor(private translateService: TranslateService) {
-    this.translateService.setDefaultLang('en');
-    this.translateService.use('en');
+    const localLang = localStorage.getItem('language');
+    if (localLang) {
+      this.translateService.setDefaultLang(localLang);
+      this.language.set(localLang);
+      this.translateService.use(localLang);
+    } else {
+      this.translateService.setDefaultLang('en');
+      this.translateService.use('en');
+    }
   }
 
   public getTranslation(key: string): Observable<string> {
@@ -29,6 +36,7 @@ export class AppTranslateService {
   }
 
   public setLanguage(lang: string): void {
+    localStorage.setItem('language', lang);
     this.language.set(lang);
     this.translateService.use(lang).subscribe(() => {
       this.setMenuValues();
