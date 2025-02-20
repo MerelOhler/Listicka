@@ -110,9 +110,7 @@ export class MenuComponent implements OnInit {
       });
   }
 
-  ngOnInit() {
-    this.translate.setLanguage('cs');
-  }
+  ngOnInit() {}
 
   setRouteToHome() {
     this.router.navigate(['/home']);

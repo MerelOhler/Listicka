@@ -1,5 +1,6 @@
 {
 	"Confirm": "Confirm",
+	"Confirm Password": "Confirm password",
 	"confirmPassword": "Confirm password",
 	"Email": "Email",
 	"home": "Home",
@@ -16,7 +17,7 @@
 	"MissingSpecial": "At least one special character.",
 	"MissingUpperCase": "At least one uppercase letter.",
 	"Name": "Name",
-	"password": "",
+	"password": "Password",
 	"Password": "Password",
 	"Passwords do not match": "Passwords do not match",
 	"profile": "Profile",

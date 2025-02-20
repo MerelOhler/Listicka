@@ -1,5 +1,6 @@
 {
 	"Confirm": "Potvrdit",
+	"Confirm Password": "Potvrdit heslo",
 	"confirmPassword": "Potvrdit heslo",
 	"Email": "E-mail",
 	"home": "Doma",
@@ -16,7 +17,7 @@
 	"MissingSpecial": "Alespoň jeden speciální znak.",
 	"MissingUpperCase": "Alespoň jedno tiskací písmeno.",
 	"Name": "Jméno",
-	"password": "",
+	"password": "Heslo",
 	"Password": "Heslo",
 	"Passwords do not match": "Hesla nejsou stejná",
 	"profile": "Profil",

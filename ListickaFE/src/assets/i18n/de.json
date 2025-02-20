@@ -1,5 +1,6 @@
 {
 	"Confirm": "Bestätigen",
+	"Confirm Password": "Bestätige das Passwort",
 	"confirmPassword": "Bestätige das Passwort",
 	"Email": "Email",
 	"home": "Heim",
@@ -16,7 +17,7 @@
 	"MissingSpecial": "Mindestens ein Sonderzeichen.",
 	"MissingUpperCase": "Mindestens ein Großbuchstabe.",
 	"Name": "Name",
-	"password": "",
+	"password": "Passwort",
 	"Password": "Passwort",
 	"Passwords do not match": "Passwörter stimmen nicht überein",
 	"profile": "Profil",
