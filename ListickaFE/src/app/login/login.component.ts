@@ -140,7 +140,6 @@ export class LoginComponent implements OnInit {
   }
 
   handleError(error: any) {
-    console.log(error);
     if (error.message === 'Invalid username or password') {
       this.appTranslateService
         .getTranslation('Invalid username or password')

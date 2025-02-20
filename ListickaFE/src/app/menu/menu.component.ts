@@ -103,7 +103,6 @@ export class MenuComponent implements OnInit {
   ]);
 
   constructor() {
-    console.log('lala');
     this.routerSubscription = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
