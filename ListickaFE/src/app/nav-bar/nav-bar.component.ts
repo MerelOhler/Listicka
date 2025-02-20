@@ -42,8 +42,4 @@ export class NavBarComponent implements OnInit {
     if (login) this.router.navigate(['/login']);
     else this.router.navigate(['/register']);
   }
-
-  logout() {
-    this.userService.logout();
-  }
 }

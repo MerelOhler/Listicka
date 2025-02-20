@@ -50,16 +50,7 @@ export class HttpService {
       },
       data: data,
     };
-    return from(CapacitorHttp.post(options)).pipe(
-      catchError((error) => {
-        console.log('huhu');
-        if (error.status === 401) {
-          // handle unauthorized error
-          console.error('Unauthorized access - 401');
-        }
-        return throwError(() => new Error(error));
-      })
-    );
+    return from(CapacitorHttp.post(options));
   }
 
   doDelete(route: string): any {

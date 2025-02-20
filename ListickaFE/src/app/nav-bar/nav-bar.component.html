@@ -6,6 +6,9 @@
     <ion-button (click)="changeTheme()">
       Theme
     </ion-button>
+    <ion-button (click)="changeLanguage()">
+      English
+    </ion-button>
     @if(!profile()){
     <ion-button (click)="goToLogin(true)">
       Login
@@ -14,14 +17,8 @@
       Register
     </ion-button>
     }
-    @else{
-    <ion-button (click)="logout()">
-      Logout
-    </ion-button>
-    }
-    <ion-button (click)="changeLanguage()">
-      English
-    </ion-button>
+    @if(profile()){
     <ion-menu-button autoHide="false"></ion-menu-button>
+    }
   </ion-buttons>
 </ion-toolbar>

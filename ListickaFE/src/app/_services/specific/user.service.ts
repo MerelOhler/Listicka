@@ -23,16 +23,12 @@ export class UserService {
     return this.http.doPost('account/login', data).pipe(
       map((response: any) => {
         if (response.status !== 200) {
-          throw new Error('Unauthorized access - 401');
+          throw new Error(response.data);
         }
         const user = response.data as User;
-        console.log(user);
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
           this.currentUser.set(user);
-          console.log('lalal');
-          console.log(this.currentUser());
-          console.log(localStorage.getItem('user'));
         }
       })
     );
@@ -41,16 +37,18 @@ export class UserService {
   logout() {
     localStorage.removeItem('user');
     this.currentUser.set(null);
-    console.log('logout');
   }
 
   register(email: string, password: string, name: string) {
     const data = { UserName: email, Password: password, Name: name };
     return this.http.doPost('account/register', data).pipe(
-      map((user: User) => {
+      map((response: any) => {
+        if (response.status !== 200) {
+          throw new Error(response.data);
+        }
+        const user = response.data as User;
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
-          console.log(user);
           this.currentUser.set(user);
         }
       })

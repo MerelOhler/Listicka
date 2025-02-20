@@ -91,12 +91,10 @@ export class LoginComponent implements OnInit {
       this.loading = true;
       this.userService.login(email, password).subscribe({
         next: (response: any) => {
-          console.log(response);
           this.loading = false;
           this.router.navigate(['home']);
         },
         error: (error: any) => {
-          console.log(error.message);
           this.handleError(error);
         },
       });
@@ -114,17 +112,15 @@ export class LoginComponent implements OnInit {
       const name = this.name.getRawValue();
       if (email && password && name) {
         this.loading = true;
-      this.userService.register(email, password, name).subscribe({
-        next: (response: any) => {
-          console.log(response);
-          this.loading = false;
-          this.router.navigate(['home']);
-        },
-        error: (error: any) => {
-          console.log(error.message);
-          this.handleError(error);
-        },
-      });
+        this.userService.register(email, password, name).subscribe({
+          next: () => {
+            this.loading = false;
+            this.router.navigate(['home']);
+          },
+          error: (error: any) => {
+            this.handleError(error);
+          },
+        });
       } else if (!email) {
         this.email.setErrors({ required: true });
       } else if (!password) {
@@ -144,7 +140,8 @@ export class LoginComponent implements OnInit {
   }
 
   handleError(error: any) {
-    if (error.message === 'Unauthorized access - 401') {
+    console.log(error);
+    if (error.message === 'Invalid username or password') {
       this.appTranslateService
         .getTranslation('Invalid username or password')
         .subscribe((response) => {
