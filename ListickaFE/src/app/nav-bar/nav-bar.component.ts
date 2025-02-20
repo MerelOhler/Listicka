@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   IonMenuButton,
   IonToolbar,
@@ -6,8 +6,10 @@ import {
   IonButtons,
   IonButton,
 } from '@ionic/angular/standalone';
-import { ThemeService } from '../services/general/theme.service';
-import { AppTranslateService } from '../services/general/app-translate.service';
+import { ThemeService } from '../_services/general/theme.service';
+import { AppTranslateService } from '../_services/general/app-translate.service';
+import { Router } from '@angular/router';
+import { UserService } from '../_services/specific/user.service';
 
 @Component({
   selector: 'nav-bar',
@@ -17,10 +19,15 @@ import { AppTranslateService } from '../services/general/app-translate.service';
   standalone: true,
 })
 export class NavBarComponent implements OnInit {
-  title = `Listicka`;
-  profile = { name: 'John Doe', email: 'asdf@asdf.com' };
+  private userService = inject(UserService);
 
-  constructor(private themeService: ThemeService, private translate: AppTranslateService) {}
+  title = `Listicka`;
+  profile = this.userService.currentUser;
+  constructor(
+    private themeService: ThemeService,
+    private translate: AppTranslateService,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
@@ -31,4 +38,8 @@ export class NavBarComponent implements OnInit {
     this.translate.setLanguage('en');
   }
 
+  goToLogin(login: boolean) {
+    if (login) this.router.navigate(['/login']);
+    else this.router.navigate(['/register']);
+  }
 }

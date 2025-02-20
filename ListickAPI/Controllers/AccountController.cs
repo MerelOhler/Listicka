@@ -28,18 +28,45 @@ namespace ListickAPI.Controllers
                 return Unauthorized("Invalid username or password");
             }
             return Ok(
-                new UserDto { UserName = user.UserName, Token = tokenService.CreateToken(user) }
+                new UserDto
+                {
+                    UserName = user.UserName,
+                    Token = tokenService.CreateToken(user),
+                    Name = user.Name,
+                }
             );
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            if (await UserExists(registerDto.UserName))
+            var existingUser = await context.LoginUser.FirstOrDefaultAsync(u =>
+                u.UserName == registerDto.UserName.ToLower()
+            );
+            if (existingUser != null)
             {
-                return BadRequest("User already exists");
+                if (
+                    !VerifyPasswordHash(
+                        existingUser.PasswordHash,
+                        existingUser.PasswordSalt,
+                        registerDto.Password
+                    )
+                )
+                {
+                    return Unauthorized("Invalid username or password");
+                }
+                else
+                {
+                    return Ok(
+                        new UserDto
+                        {
+                            UserName = existingUser.UserName,
+                            Token = tokenService.CreateToken(existingUser),
+                            Name = existingUser.Name,
+                        }
+                    );
+                }
             }
-
             CreatePasswordHash(
                 registerDto.Password,
                 out byte[] passwordHash,
@@ -51,12 +78,18 @@ namespace ListickAPI.Controllers
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Email = registerDto.UserName,
+                Name = registerDto.Name,
             };
 
             context.LoginUser.Add(user);
             await context.SaveChangesAsync();
             return Ok(
-                new UserDto { UserName = user.UserName, Token = tokenService.CreateToken(user) }
+                new UserDto
+                {
+                    UserName = user.UserName,
+                    Token = tokenService.CreateToken(user),
+                    Name = user.Name,
+                }
             );
         }
 
@@ -69,11 +102,6 @@ namespace ListickAPI.Controllers
             using var hmac = new System.Security.Cryptography.HMACSHA512();
             passwordSalt = hmac.Key;
             passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-        }
-
-        private async Task<bool> UserExists(string email)
-        {
-            return await context.LoginUser.AnyAsync(u => u.Email.ToLower() == email.ToLower());
         }
 
         private bool VerifyPasswordHash(byte[] passwordHash, byte[] passwordSalt, string password)

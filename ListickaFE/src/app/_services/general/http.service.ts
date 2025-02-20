@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Capacitor, CapacitorHttp } from '@capacitor/core';
-import { from } from 'rxjs';
+import { catchError, from, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

@@ -5,7 +5,7 @@ import {
   IonItem,
   IonLabel,
 } from '@ionic/angular/standalone';
-import { UserService } from '../services/specific/user.service';
+import { UserService } from '../_services/specific/user.service';
 import { NgIf, CurrencyPipe } from '@angular/common';
 
 @Component({
@@ -31,8 +31,7 @@ export class HomePage implements OnInit {
       error: (error: any) => {
         console.error(error);
       },
-      complete: () => {
-      },
+      complete: () => {},
     });
 
     this.userService.getUserById(1).subscribe({

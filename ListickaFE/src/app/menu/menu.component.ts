@@ -1,6 +1,7 @@
 import {
   Component,
   computed,
+  inject,
   OnInit,
   signal,
   Signal,
@@ -25,9 +26,11 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgClass } from '@angular/common';
-import { Router } from '@angular/router';
-import { AppTranslateService } from '../services/general/app-translate.service';
-import { RouterHelperService } from '../services/general/router-helper.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { AppTranslateService } from '../_services/general/app-translate.service';
+import { RouterHelperService } from '../_services/general/router-helper.service';
+import { UserService } from '../_services/specific/user.service';
+import { filter, Subscription } from 'rxjs';
 
 @Component({
   selector: 'menu',
@@ -50,14 +53,23 @@ import { RouterHelperService } from '../services/general/router-helper.service';
   standalone: true,
 })
 export class MenuComponent implements OnInit {
+  private router = inject(Router);
+  private translate = inject(AppTranslateService);
+  private routerHelper = inject(RouterHelperService);
+  private userService = inject(UserService);
+
   faHouse = faHouse;
   faUser = faUser;
   faBullhorn = faBullhorn;
   faArrowRightFromBracket = faArrowRightFromBracket;
+
   homeActive = signal(false);
   profileActive = signal(false);
   translateActive = signal(false);
   logoutActive = signal(false);
+
+  userProfile = this.userService.currentUser;
+  routerSubscription: Subscription;
 
   public pages: Signal<any> = computed(() => [
     {
@@ -90,29 +102,16 @@ export class MenuComponent implements OnInit {
     },
   ]);
 
-  userProfile = {
-    name: 'John Doe',
-    email: 'asdf',
-  };
-  title: string = 'Listicka';
-  huhu: any;
-
-  constructor(
-    private router: Router,
-    private translate: AppTranslateService,
-    private routerHelper: RouterHelperService
-  ) {}
+  constructor() {
+    this.routerSubscription = this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.setActive(event.url);
+      });
+  }
 
   ngOnInit() {
-    const indexActivePage = this.pages().findIndex(
-      (a: any) => a.url === this.routerHelper.getActiveRoute()
-    );
-    if (indexActivePage >= 0) {
-      (this as any)[this.pages()[indexActivePage].name + 'Active'].set(true);
-    } else {
-      this.setRouteToHome();
-    }
-    this.setMenuValues();
+    this.translate.setLanguage('cs');
   }
 
   setRouteToHome() {
@@ -124,14 +123,38 @@ export class MenuComponent implements OnInit {
     if (!page.active) {
       const indexActivePage = this.pages().findIndex((a: any) => a.active);
       if (indexActivePage >= 0) {
-        this.pages()[indexActivePage].active = false;
+        (this as any)[this.pages()[indexActivePage].name + 'Active'].set(false);
       }
       page.active = true;
     }
     this.router.navigate([page.url]);
+    if (page.name === 'logout') {
+      this.logout();
+    }
   }
 
-  setMenuValues() {
-    this.translate.setLanguage('cs');
+  setActive(page: string = '') {
+    if (page === '') {
+      page = this.routerHelper.getActiveRoute();
+    }
+    const indexActivePage = this.pages().findIndex((a: any) => a.url === page);
+    if (indexActivePage >= 0) {
+      this.pages().forEach((element: any) => {
+        element.active = false;
+      });
+      (this as any)[this.pages()[indexActivePage].name + 'Active'].set(true);
+      this.pages()[indexActivePage].active = true;
+    }
+  }
+
+  logout() {
+    this.userService.logout();
+    this.router.navigate(['/home']);
+  }
+
+  ngOnDestroy(): void {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
 }

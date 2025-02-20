@@ -9,4 +9,6 @@ public class RegisterDto
     [MaxLength(100)]
     public required string UserName { get; set; }
     public required string Password { get; set; }
+
+    public required string Name { get; set; }
 }
