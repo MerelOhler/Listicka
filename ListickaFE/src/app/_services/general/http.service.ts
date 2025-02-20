@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Capacitor, CapacitorHttp } from '@capacitor/core';
-import { from } from 'rxjs';
+import { catchError, from, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -50,7 +50,16 @@ export class HttpService {
       },
       data: data,
     };
-    return from(CapacitorHttp.post(options));
+    return from(CapacitorHttp.post(options)).pipe(
+      catchError((error) => {
+        console.log('huhu');
+        if (error.status === 401) {
+          // handle unauthorized error
+          console.error('Unauthorized access - 401');
+        }
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   doDelete(route: string): any {

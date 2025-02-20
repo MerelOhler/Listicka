@@ -1,6 +1,7 @@
 import {
   Component,
   computed,
+  inject,
   OnInit,
   signal,
   Signal,
@@ -28,6 +29,7 @@ import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { AppTranslateService } from '../_services/general/app-translate.service';
 import { RouterHelperService } from '../_services/general/router-helper.service';
+import { UserService } from '../_services/specific/user.service';
 
 @Component({
   selector: 'menu',
@@ -50,6 +52,11 @@ import { RouterHelperService } from '../_services/general/router-helper.service'
   standalone: true,
 })
 export class MenuComponent implements OnInit {
+  private router = inject(Router);
+  private translate = inject(AppTranslateService);
+  private routerHelper = inject(RouterHelperService);
+  private userService = inject(UserService);
+
   faHouse = faHouse;
   faUser = faUser;
   faBullhorn = faBullhorn;
@@ -89,19 +96,10 @@ export class MenuComponent implements OnInit {
       active: false,
     },
   ]);
-
-  userProfile = {
-    name: 'John Doe',
-    email: 'asdf',
-  };
+  userProfile = this.userService.currentUser;
   title: string = 'Listicka';
-  huhu: any;
 
-  constructor(
-    private router: Router,
-    private translate: AppTranslateService,
-    private routerHelper: RouterHelperService
-  ) {}
+  constructor() {}
 
   ngOnInit() {
     const indexActivePage = this.pages().findIndex(

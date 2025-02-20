@@ -19,4 +19,7 @@ public class LoginUser
 
     [MaxLength(100)]
     public required string Email { get; set; }
+
+    [MaxLength(100)]
+    public required string Name { get; set; }
 }

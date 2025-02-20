@@ -6,9 +6,9 @@
         <img src="assets/img/avatar.jpg" alt="">
       </ion-avatar>
       <ion-label>
-        {{userProfile.name}}
+        {{userProfile()?.name}}
         <p ellipsis="true">
-          <ion-text color="light">{{userProfile.email}}</ion-text>
+          <ion-text color="light">{{userProfile()?.userName}}</ion-text>
         </p>
       </ion-label>
     </ion-item>

@@ -4,6 +4,7 @@
 	"Email": "E-mail",
 	"home": "Doma",
 	"Invalid email": "Neplatný email",
+	"Invalid name": "Neplatné jméno",
 	"Invalid password": "Neplatné heslo",
 	"Invalid username or password": "Neplatné uživatelské jméno nebo heslo",
 	"LessThan8Chars": "Minimálně 8 znaků.",
@@ -13,12 +14,15 @@
 	"MissingLowerCase": "Alespoň jedno malé písmeno.",
 	"MissingSpecial": "Alespoň jeden speciální znak.",
 	"MissingUpperCase": "Alespoň jedno tiskací písmeno.",
+	"Name": "Jméno",
 	"password": "",
 	"Password": "Heslo",
 	"Passwords do not match": "Hesla nejsou stejná",
 	"profile": "Profil",
 	"Register": "Zaregistrovat",
 	"Registration successful": "Registrace je potvrzena",
+	"Something went wrong": "Něco se pokazilo",
+	"Something went wrong, please try again": "Něco se pokazilo, zkuste to prosím znovu",
 	"translate": "Přeložit",
 	"Username": "Email"
 }

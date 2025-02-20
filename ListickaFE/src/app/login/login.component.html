@@ -1,10 +1,21 @@
-<ion-card *ngIf="!loading">
+<ion-card>
   <ion-card-header>
     <ion-card-title>{{register? ('Register' | translate) : ('Login' | translate)}}</ion-card-title>
   </ion-card-header>
 
   <ion-card-content>
+    @if(loading){
+    <ion-spinner></ion-spinner>
+    }
+    @else{
     <ion-list>
+      @if(register){
+      <ion-item lines="none">
+        <ion-label position="floating">{{'Name' | translate}}</ion-label>
+        <ion-input [formControl]="name" placeholder="{{'Name' | translate}}" errorText="{{'Invalid name'| translate}}"
+          [clearOnEdit]="false"></ion-input>
+      </ion-item>
+      }
       <ion-item lines="none">
         <ion-label position="floating">{{'Email' | translate}}</ion-label>
         <ion-input type="email" [formControl]="email" placeholder="email@listicka.com"
@@ -30,21 +41,26 @@
             {{'LessThan8Chars' | translate}}</p>
         </div>
       </ion-item>
-      <ion-item lines="none" *ngIf="register">
+      @if(register){
+      <ion-item lines="none">
         <ion-label position="floating">{{'Confirm' | translate}}</ion-label>
         <ion-input type="password" [formControl]="confirmPassword" placeholder="*****"
           errorText="{{'Passwords do not match'| translate}}" [clearOnEdit]="false">
           <ion-input-password-toggle slot="end"></ion-input-password-toggle>
         </ion-input>
       </ion-item>
-
+      }
     </ion-list>
 
-    <ion-button *ngIf="!register" expand="block" (click)="loginUser()">{{'Login' | translate}}</ion-button>
-    <ion-button *ngIf="register" [disabled]="password.valid && email.valid && confirmPassword.valid ? null : true"
+    @if(!register){
+    <ion-button [disabled]="password.valid && email.valid ? null : true" expand="block" (click)="loginUser()">{{'Login'
+      | translate}}</ion-button>
+    <a (click)="register = true">{{'Register' | translate}}</a>
+    } @else {
+    <ion-button [disabled]="password.valid && email.valid && confirmPassword.valid && name.valid ? null : true"
       expand="block" (click)="registerUser()">{{'Register' | translate}}</ion-button>
-    <a *ngIf="!register" (click)="register = true">{{'Register' | translate}}</a>
-    <a *ngIf="register" (click)="register = false">{{'Login' | translate}}</a>
-
+    <a (click)="register = false">{{'Login' | translate}}</a>
+    }
+    }
   </ion-card-content>
 </ion-card>

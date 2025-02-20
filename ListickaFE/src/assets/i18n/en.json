@@ -4,6 +4,7 @@
 	"Email": "Email",
 	"home": "Home",
 	"Invalid email": "Invalid email",
+	"Invalid name": "Invalid name",
 	"Invalid password": "Invalid password",
 	"Invalid username or password": "Invalid username or password",
 	"LessThan8Chars": "At least 8 characters long.",
@@ -13,12 +14,15 @@
 	"MissingLowerCase": "At least one lowercase letter.",
 	"MissingSpecial": "At least one special character.",
 	"MissingUpperCase": "At least one uppercase letter.",
+	"Name": "Name",
 	"password": "",
 	"Password": "Password",
 	"Passwords do not match": "Passwords do not match",
 	"profile": "Profile",
 	"Register": "Register",
 	"Registration successful": "Registration successful",
+	"Something went wrong": "Something went wrong",
+	"Something went wrong, please try again": "Something went wrong, please try again",
 	"translate": "Translate",
 	"Username": "Email"
 }

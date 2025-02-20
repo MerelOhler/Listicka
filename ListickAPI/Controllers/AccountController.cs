@@ -28,7 +28,12 @@ namespace ListickAPI.Controllers
                 return Unauthorized("Invalid username or password");
             }
             return Ok(
-                new UserDto { UserName = user.UserName, Token = tokenService.CreateToken(user) }
+                new UserDto
+                {
+                    UserName = user.UserName,
+                    Token = tokenService.CreateToken(user),
+                    Name = user.Name,
+                }
             );
         }
 
@@ -57,6 +62,7 @@ namespace ListickAPI.Controllers
                         {
                             UserName = existingUser.UserName,
                             Token = tokenService.CreateToken(existingUser),
+                            Name = existingUser.Name,
                         }
                     );
                 }
@@ -72,12 +78,18 @@ namespace ListickAPI.Controllers
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Email = registerDto.UserName,
+                Name = registerDto.Name,
             };
 
             context.LoginUser.Add(user);
             await context.SaveChangesAsync();
             return Ok(
-                new UserDto { UserName = user.UserName, Token = tokenService.CreateToken(user) }
+                new UserDto
+                {
+                    UserName = user.UserName,
+                    Token = tokenService.CreateToken(user),
+                    Name = user.Name,
+                }
             );
         }
 

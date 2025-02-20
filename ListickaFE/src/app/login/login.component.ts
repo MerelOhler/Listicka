@@ -10,14 +10,15 @@ import {
   IonInput,
   IonButton,
   IonInputPasswordToggle,
-  ToastController,
+  IonSpinner,
 } from '@ionic/angular/standalone';
 import { TranslateModule } from '@ngx-translate/core';
 import { Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { NgClass, NgIf } from '@angular/common';
-import { LoginService } from '../_services/specific/login.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppTranslateService } from '../_services/general/app-translate.service';
+import { UserService } from '../_services/specific/user.service';
+import { ToastService } from '../_services/general/toast.service';
 
 export const StrongPasswordRegx: RegExp =
   /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
@@ -43,12 +44,20 @@ export const emailRegex: RegExp =
     NgClass,
     NgIf,
     IonInputPasswordToggle,
+    IonSpinner,
   ],
 })
 export class LoginComponent implements OnInit {
+  private userService = inject(UserService);
+  private appTranslateService = inject(AppTranslateService);
+  private router = inject(Router);
+  private toast = inject(ToastService);
+  private route = inject(ActivatedRoute);
+
   loading = true;
   register: boolean = true;
 
+  name = new FormControl('', [Validators.required]);
   email = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -64,13 +73,14 @@ export class LoginComponent implements OnInit {
     Validators.minLength(6),
   ]);
 
-  loginService = inject(LoginService);
-  appTranslateService = inject(AppTranslateService);
-  router = inject(Router);
-  toast = inject(ToastController);
-
   ngOnInit() {
+    if (this.userService.currentUser()) {
+      this.router.navigate(['home']);
+    }
     this.confirmPassword.setValidators(this.passwordConfirming);
+    this.route.data.subscribe((data) => {
+      this.register = data['register'];
+    });
     this.loading = false;
   }
 
@@ -78,20 +88,22 @@ export class LoginComponent implements OnInit {
     const email = this.email.getRawValue();
     const password = this.password.getRawValue();
     if (email && password) {
-      this.loginService.login(email, password).subscribe({
+      this.loading = true;
+      this.userService.login(email, password).subscribe({
         next: (response: any) => {
           console.log(response);
-          if (response.status === 200) {
-            console.log('login successful');
-            this.router.navigate(['home']);
-          } else {
-            this.handleError(response);
-          }
+          this.loading = false;
+          this.router.navigate(['home']);
         },
         error: (error: any) => {
+          console.log(error.message);
           this.handleError(error);
         },
       });
+    } else if (!email) {
+      this.email.setErrors({ required: true });
+    } else if (!password) {
+      this.password.setErrors({ required: true });
     }
   }
 
@@ -99,33 +111,32 @@ export class LoginComponent implements OnInit {
     if (this.validate()) {
       const email = this.email.getRawValue();
       const password = this.password.getRawValue();
-      if (email && password) {
-        this.loginService.register(email, password).subscribe({
-          next: (response: any) => {
-            console.log(response);
-            if (response.status === 200) {
-              console.log('registration successful');
-              this.appTranslateService
-                .getTranslation('Registration successful')
-                .subscribe((response) => {
-                  this.presentToast(true, response);
-                });
-              this.router.navigate(['home']);
-            } else {
-              this.handleError(response);
-            }
-          },
-          error: (error: any) => {
-            this.handleError(error);
-          },
-        });
+      const name = this.name.getRawValue();
+      if (email && password && name) {
+        this.loading = true;
+      this.userService.register(email, password, name).subscribe({
+        next: (response: any) => {
+          console.log(response);
+          this.loading = false;
+          this.router.navigate(['home']);
+        },
+        error: (error: any) => {
+          console.log(error.message);
+          this.handleError(error);
+        },
+      });
+      } else if (!email) {
+        this.email.setErrors({ required: true });
+      } else if (!password) {
+        this.password.setErrors({ required: true });
+      } else if (!name) {
+        this.name.setErrors({ required: true });
       }
     }
   }
 
   validate() {
     if (this.password.getRawValue() !== this.confirmPassword.getRawValue()) {
-      console.log('passwords do not match');
       this.confirmPassword.setErrors({ notSame: true });
       return false;
     }
@@ -133,31 +144,21 @@ export class LoginComponent implements OnInit {
   }
 
   handleError(error: any) {
-    if (error.data === '') {
+    if (error.message === 'Unauthorized access - 401') {
+      this.appTranslateService
+        .getTranslation('Invalid username or password')
+        .subscribe((response) => {
+          this.toast.presentToast(false, response);
+          this.loading = false;
+        });
+    } else {
       this.appTranslateService
         .getTranslation('Something went wrong, please try again')
         .subscribe((response) => {
-          this.presentToast(false, response);
-        });
-    } else {
-      console.log(error.data);
-      this.appTranslateService
-        .getTranslation(error.data)
-        .subscribe((response) => {
-          this.presentToast(false, response);
+          this.toast.presentToast(false, response);
+          this.loading = false;
         });
     }
-  }
-
-  async presentToast(positive: boolean, message: string) {
-    const toast = await this.toast.create({
-      message: message,
-      duration: 1500,
-      position: 'top',
-      color: positive ? 'success' : 'danger',
-    });
-
-    await toast.present();
   }
 
   passwordConfirming = () => {

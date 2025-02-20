@@ -4,11 +4,21 @@
   </ion-title>
   <ion-buttons slot="end">
     <ion-button (click)="changeTheme()">
-      lalala
+      Theme
     </ion-button>
-    <ion-button (click)="goToLogin()">
+    @if(!profile()){
+    <ion-button (click)="goToLogin(true)">
       Login
     </ion-button>
+    <ion-button (click)="goToLogin(false)">
+      Register
+    </ion-button>
+    }
+    @else{
+    <ion-button (click)="logout()">
+      Logout
+    </ion-button>
+    }
     <ion-button (click)="changeLanguage()">
       English
     </ion-button>
