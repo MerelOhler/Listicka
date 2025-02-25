@@ -22,6 +22,7 @@ import {
   faBullhorn,
   faArrowRightFromBracket,
   faUser,
+  faListUl,
 } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -62,9 +63,11 @@ export class MenuComponent implements OnInit {
   faUser = faUser;
   faBullhorn = faBullhorn;
   faArrowRightFromBracket = faArrowRightFromBracket;
+  faListUl = faListUl;
 
   homeActive = signal(false);
   profileActive = signal(false);
+  todoActive = signal(false);
   translateActive = signal(false);
   logoutActive = signal(false);
 
@@ -78,6 +81,13 @@ export class MenuComponent implements OnInit {
       icon: faHouse,
       url: '/home',
       active: this.homeActive(),
+    },
+    {
+      name: 'todo',
+      title: this.translate.todo(),
+      icon: faListUl,
+      url: '/todo',
+      active: this.todoActive(),
     },
     {
       name: 'profile',

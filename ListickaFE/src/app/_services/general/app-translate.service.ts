@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class AppTranslateService {
   home = signal('Home');
   profile = signal('Profile');
+  todo = signal('Todo');
   translate = signal('Translate');
   logout = signal('Logout');
   login = signal('Login');
