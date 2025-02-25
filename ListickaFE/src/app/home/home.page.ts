@@ -13,7 +13,15 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'l-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.css'],
-  imports: [IonContent, IonList, IonItem, IonLabel, NgIf, CurrencyPipe, TranslateModule],
+  imports: [
+    IonContent,
+    IonList,
+    IonItem,
+    IonLabel,
+    NgIf,
+    CurrencyPipe,
+    TranslateModule,
+  ],
 })
 export class HomePage implements OnInit {
   title = 'Listicka';
