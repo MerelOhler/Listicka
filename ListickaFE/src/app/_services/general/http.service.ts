@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
 export class HttpService {
   constructor() {}
 
-  isNative = Capacitor.isNativePlatform();
   baseURL = Capacitor.isNativePlatform()
     ? environment.nativeApiURL
     : environment.apiURL;

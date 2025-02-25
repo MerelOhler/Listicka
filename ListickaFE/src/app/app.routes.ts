@@ -7,6 +7,7 @@ import { TodoCreateComponent } from './todo/create/todo-create/todo-create.compo
 import { TodoItemComponent } from './todo/item/todo-item/todo-item.component';
 
 export const routes = [
+  { path: '', component: HomePage },
   { path: 'home', component: HomePage },
   { path: 'login', component: LoginComponent, data: { register: false } },
   { path: 'register', component: LoginComponent, data: { register: true } },

@@ -22,6 +22,8 @@ export class UserService {
     const data = { UserName: email, Password: password };
     return this.http.doPost('account/login', data).pipe(
       map((response: any) => {
+        console.log('in login');
+        console.log(response);
         if (response.status !== 200) {
           throw new Error(response.data);
         }
