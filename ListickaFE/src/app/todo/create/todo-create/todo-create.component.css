@@ -1,0 +1,21 @@
+ion-card {
+    min-width: 20rem;
+    margin: 2rem auto auto auto;
+    ion-item {
+        ion-label {
+            margin-bottom: 0.5rem; 
+            font-size: small;
+        }
+        .valid {
+            color: var(--ion-color-danger);
+            font-size: small;
+        }
+        .invalid {
+            color: var(--ion-color-success);
+            font-size: small;
+        }
+    }
+    a:hover {
+        cursor:pointer;
+       }
+}
