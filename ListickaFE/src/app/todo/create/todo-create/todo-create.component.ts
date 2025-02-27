@@ -44,26 +44,29 @@ export class TodoCreateComponent implements OnInit {
   ];
 
   cadenceOptions = [
-    { value: '1', label: 'Every day' },
-    { value: '2', label: 'Every weekday' },
-    { value: '3', label: 'Every weekend' },
-    { value: '4', label: 'Every week' },
-    { value: '5', label: 'Every month on date' },
-    { value: '6', label: 'Every end of month' },
-    { value: '7', label: 'Every nth weekday of the month' },
-    { value: '8', label: 'Every year on date' },
-    { value: '9', label: 'Every end of year' },
-    { value: '10', label: 'Every xth weekday in the yth month of the year' },
+    { value: '1', label: 'Daily' },
+    { value: '2', label: 'Daily only on weekdays' },
+    { value: '3', label: 'Daily only on weekend days' },
+    { value: '4', label: 'Weekly' },
+    { value: '5', label: 'Monthly on a specific date' },
+    { value: '6', label: 'At the end of every month' },
+    { value: '7', label: 'Monthly on the 3rd Monday' },
+    { value: '8', label: 'Yearly on a specific date' },
+    { value: '9', label: 'At the end of every year' },
+    { value: '10', label: 'Yearly on the 3rd Monday in February' },
   ];
 
   title = new FormControl('', [Validators.required]);
+  description = new FormControl('', []);
   importance = new FormControl('', [Validators.required]);
   color = new FormControl('', [Validators.required]);
-  description = new FormControl('', []);
   dates = new FormControl('', [Validators.required]);
+  time = new FormControl('', [Validators.required]);
   recurring = new FormControl('', [Validators.required]);
   cadence = new FormControl('', [Validators.required]);
-  timeToFinish = new FormControl('', [Validators.required]);
+  allotedTime = new FormControl('', [Validators.required]);
+  endDateTime = new FormControl('', []);
+  project = new FormControl('', []);
 
   constructor() {}
 
