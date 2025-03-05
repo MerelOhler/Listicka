@@ -19,8 +19,8 @@ public class Project
     public Cadence? Cadence { get; set; } = null!;
     public required LoginUser CreatedBy { get; set; }
     public DateTime DateCreated { get; set; }
-    public LoginUser ModifiedBy { get; set; } = null!;
-    public DateTime DateModified { get; set; }
-    public LoginUser DeletedBy { get; set; } = null!;
-    public DateTime DateDeleted { get; set; }
+    public LoginUser? ModifiedBy { get; set; } = null!;
+    public DateTime? DateModified { get; set; }
+    public LoginUser? DeletedBy { get; set; } = null!;
+    public DateTime? DateDeleted { get; set; }
 }
