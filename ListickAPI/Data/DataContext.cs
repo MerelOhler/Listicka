@@ -12,4 +12,5 @@ public class DataContext(DbContextOptions options) : DbContext(options)
     public DbSet<WeekDays> WeekDays { get; set; }
     public DbSet<Status> Status { get; set; }
     public DbSet<Priority> Priority { get; set; }
+    public DbSet<Project> Project { get; set; }
 }
