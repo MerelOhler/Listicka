@@ -13,4 +13,18 @@ public class DataContext(DbContextOptions options) : DbContext(options)
     public DbSet<Status> Status { get; set; }
     public DbSet<Priority> Priority { get; set; }
     public DbSet<Project> Project { get; set; }
+    public DbSet<ToDo> ToDo { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder
+            .Entity<ToDo>()
+            .HasMany(p => p.WeekDays)
+            .WithMany(r => r.ToDo)
+            .UsingEntity<Dictionary<string, object>>(
+                "ToDoWeekDays",
+                r => r.HasOne<WeekDays>().WithMany().HasForeignKey("WeekDayId"),
+                l => l.HasOne<ToDo>().WithMany().HasForeignKey("ToDoId")
+            );
+    }
 }

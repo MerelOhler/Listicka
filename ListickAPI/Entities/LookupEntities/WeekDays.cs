@@ -13,4 +13,6 @@ public class WeekDays
 
     [MaxLength(512)]
     public required string WeekDayDescription { get; set; }
+
+    public List<ToDo> ToDo { get; set; } = null!;
 }
