@@ -1,5 +1,5 @@
-using System;
 using ListickAPI.Entities;
+using ListickAPI.Entities.ChangeHistory;
 using ListickAPI.Entities.LookupEntities;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +14,7 @@ public class DataContext(DbContextOptions options) : DbContext(options)
     public DbSet<Priority> Priority { get; set; }
     public DbSet<Project> Project { get; set; }
     public DbSet<ToDo> ToDo { get; set; }
+    public DbSet<ToDoRecurrance> ToDoRecurrance { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
