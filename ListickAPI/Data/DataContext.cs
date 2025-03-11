@@ -18,13 +18,13 @@ public class DataContext(DbContextOptions options) : DbContext(options)
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
-            .Entity<ToDo>()
+            .Entity<ToDoRecurrance>()
             .HasMany(p => p.WeekDays)
-            .WithMany(r => r.ToDo)
+            .WithMany(r => r.ToDoRecurance)
             .UsingEntity<Dictionary<string, object>>(
-                "ToDoWeekDays",
+                "ToDoRecurranceWeekDays",
                 r => r.HasOne<WeekDays>().WithMany().HasForeignKey("WeekDayId"),
-                l => l.HasOne<ToDo>().WithMany().HasForeignKey("ToDoId")
+                l => l.HasOne<ToDoRecurrance>().WithMany().HasForeignKey("ToDoRecurranceId")
             );
     }
 }

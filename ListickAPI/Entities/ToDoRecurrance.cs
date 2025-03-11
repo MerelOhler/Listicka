@@ -1,14 +1,13 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using ListickAPI.Entities.LookupEntities;
 
 namespace ListickAPI.Entities;
 
-public class ToDo
+public class ToDoRecurrance
 {
     [Key]
-    public int ToDoId { get; set; }
+    public int ToDoRecurranceId { get; set; }
 
     [MaxLength(100)]
     public required string ToDoName { get; set; }
@@ -24,9 +23,9 @@ public class ToDo
 
     [MaxLength(64)]
     public string? ColorHexCode { get; set; } = null!;
-    public string? Notes { get; set; } = null!;
-    public short? PercentComplete { get; set; } = null!;
-    public ToDoRecurrance? ToDoRecurrance { get; set; }
+    public string? RecurringNotes { get; set; } = null!;
+    public required Cadence Cadence { get; set; }
+    public List<WeekDays> WeekDays { get; set; } = null!;
     public required LoginUser CreatedBy { get; set; }
     public DateTime DateCreated { get; set; }
     public LoginUser? ModifiedBy { get; set; } = null!;
