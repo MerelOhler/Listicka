@@ -1,5 +1,6 @@
 using System;
 using ListickAPI.Data;
+using ListickAPI.Interceptors;
 using ListickAPI.Services;
 using ListickAPI.Services.IServices;
 using Microsoft.EntityFrameworkCore;
@@ -14,8 +15,19 @@ public static class ApplicationServiceExtensions
     )
     {
         services.AddControllers();
-        services.AddDbContext<DataContext>(options =>
-            options.UseSqlServer(config.GetConnectionString("ListickaConnection"))
+
+        services.AddSingleton<ChangeHistoryInterceptor>();
+        services.AddDbContext<DataContext>(
+            (sp, options) =>
+            {
+                var changeHistoryInterceptor = sp.GetService<ChangeHistoryInterceptor>();
+                options
+                    .UseSqlServer(config.GetConnectionString("ListickaConnection"))
+                    .AddInterceptors(
+                        changeHistoryInterceptor
+                            ?? throw new ArgumentNullException(nameof(changeHistoryInterceptor))
+                    );
+            }
         );
 
         services.AddCors();

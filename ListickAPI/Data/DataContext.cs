@@ -15,6 +15,7 @@ public class DataContext(DbContextOptions options) : DbContext(options)
     public DbSet<Project> Project { get; set; }
     public DbSet<ToDo> ToDo { get; set; }
     public DbSet<ToDoRecurrance> ToDoRecurrance { get; set; }
+    public DbSet<ToDoChangeHistory> ToDoChangeHistory { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
