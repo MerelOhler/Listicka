@@ -1,8 +1,8 @@
 using ListickAPI.Data;
 using ListickAPI.DataObjects;
-using ListickAPI.Entities;
+using ListickAPI.Services;
+using ListickAPI.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ListickAPI.Controllers
 {
@@ -10,32 +10,54 @@ namespace ListickAPI.Controllers
     [ApiController]
     public class ToDoController(DataContext context) : BaseListickaController
     {
+        readonly IToDoService toDoService = new ToDoService(context);
+
         [HttpPost("create")]
         public async Task<ActionResult<ToDoDto>> Create(ToDoDto toDoDto)
         {
-            var user = await context.LoginUser.FirstOrDefaultAsync(u =>
-                u.LoginUserId == toDoDto.LoginUserId
-            );
-            if (user == null)
+            try
             {
-                return Unauthorized("Invalid username or password");
+                ToDoDto dto = await toDoService.Create(toDoDto);
+                if (dto == null)
+                {
+                    return BadRequest("Failed to create ToDo");
+                }
+                return Ok(dto);
             }
-            var toDo = new ToDo
+            catch (Exception e)
             {
-                ToDoName = toDoDto.ToDoName,
-                Description = toDoDto.Description,
-                StartDate = toDoDto.StartDate,
-                EndDate = toDoDto.EndDate,
-                TimeNeeded = toDoDto.TimeNeeded,
-                ColorHexCode = toDoDto.ColorHexCode,
-                Notes = toDoDto.Notes,
-                PercentComplete = toDoDto.PercentComplete,
-                CreatedBy = user,
-                DateCreated = DateTime.UtcNow,
-            };
-            context.ToDo.Add(toDo);
-            await context.SaveChangesAsync();
-            return Ok(toDoDto);
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ToDoDto>> GetByID(int id)
+        {
+            ToDoDto? toDo = await toDoService.GetById(id);
+            if (toDo == null)
+            {
+                return NotFound();
+            }
+            return Ok(toDo);
+        }
+
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<List<ToDoDto>>> GetByUser(
+            int userId,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10,
+            [FromQuery] string? search = null,
+            [FromQuery] bool? completed = null
+        )
+        {
+            List<ToDoDto> toDos = await toDoService.GetByUserId(
+                userId,
+                page,
+                pageSize,
+                search,
+                completed
+            );
+            return Ok(toDos);
         }
     }
 }

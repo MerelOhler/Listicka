@@ -30,9 +30,13 @@ namespace ListickAPI.Controllers
             return Ok(
                 new UserDto
                 {
+                    LoginUserId = user.LoginUserId,
                     UserName = user.UserName,
                     Token = tokenService.CreateToken(user),
-                    Name = user.Name,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Language = user.Language,
                 }
             );
         }
@@ -60,9 +64,13 @@ namespace ListickAPI.Controllers
                     return Ok(
                         new UserDto
                         {
+                            LoginUserId = existingUser.LoginUserId,
                             UserName = existingUser.UserName,
                             Token = tokenService.CreateToken(existingUser),
-                            Name = existingUser.Name,
+                            FirstName = existingUser.FirstName,
+                            LastName = existingUser.LastName,
+                            Email = existingUser.Email,
+                            Language = existingUser.Language,
                         }
                     );
                 }
@@ -78,7 +86,8 @@ namespace ListickAPI.Controllers
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Email = registerDto.UserName,
-                Name = registerDto.Name,
+                FirstName = registerDto.FirstName,
+                DateCreated = DateTime.UtcNow,
             };
 
             context.LoginUser.Add(user);
@@ -86,9 +95,13 @@ namespace ListickAPI.Controllers
             return Ok(
                 new UserDto
                 {
+                    LoginUserId = user.LoginUserId,
                     UserName = user.UserName,
                     Token = tokenService.CreateToken(user),
-                    Name = user.Name,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Language = user.Language,
                 }
             );
         }

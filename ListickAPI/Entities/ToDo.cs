@@ -27,7 +27,7 @@ public class ToDo
     public string? Notes { get; set; } = null!;
     public short? PercentComplete { get; set; } = null!;
     public ToDoRecurrance? ToDoRecurrance { get; set; }
-    public required LoginUser CreatedBy { get; set; }
+    public virtual required LoginUser CreatedBy { get; set; }
     public DateTime DateCreated { get; set; }
     public LoginUser? ModifiedBy { get; set; } = null!;
     public DateTime? DateModified { get; set; } = null!;

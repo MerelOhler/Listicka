@@ -16,6 +16,7 @@ public class DataContext(DbContextOptions options) : DbContext(options)
     public DbSet<ToDo> ToDo { get; set; }
     public DbSet<ToDoRecurrance> ToDoRecurrance { get; set; }
     public DbSet<ToDoChangeHistory> ToDoChangeHistory { get; set; }
+    public DbSet<Language> Language { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

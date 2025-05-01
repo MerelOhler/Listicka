@@ -4,6 +4,7 @@ using ListickAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ListickAPI.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250410171603_loginuserUpdates")]
+    partial class loginuserUpdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,9 +112,6 @@ namespace ListickAPI.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("LanguageId")
-                        .HasColumnType("int");
-
                     b.Property<string>("LastName")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -161,8 +161,6 @@ namespace ListickAPI.Data.Migrations
 
                     b.HasKey("LoginUserId");
 
-                    b.HasIndex("LanguageId");
-
                     b.HasIndex("WeekStartWeekDayId");
 
                     b.ToTable("LoginUser");
@@ -189,39 +187,6 @@ namespace ListickAPI.Data.Migrations
                     b.HasKey("CadenceId");
 
                     b.ToTable("Cadence");
-                });
-
-            modelBuilder.Entity("ListickAPI.Entities.LookupEntities.Language", b =>
-                {
-                    b.Property<int>("LanguageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LanguageId"));
-
-                    b.Property<string>("DateFormat")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("FlagIconUrl")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("LanguageCode")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("LanguageName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("TimeFormat")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("LanguageId");
-
-                    b.ToTable("Language");
                 });
 
             modelBuilder.Entity("ListickAPI.Entities.LookupEntities.Priority", b =>
@@ -559,17 +524,9 @@ namespace ListickAPI.Data.Migrations
 
             modelBuilder.Entity("ListickAPI.Entities.LoginUser", b =>
                 {
-                    b.HasOne("ListickAPI.Entities.LookupEntities.Language", "Language")
-                        .WithMany()
-                        .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ListickAPI.Entities.LookupEntities.WeekDays", "WeekStart")
                         .WithMany()
                         .HasForeignKey("WeekStartWeekDayId");
-
-                    b.Navigation("Language");
 
                     b.Navigation("WeekStart");
                 });

@@ -39,8 +39,20 @@ export class UserService {
     this.currentUser.set(null);
   }
 
-  register(email: string, password: string, name: string) {
-    const data = { UserName: email, Password: password, Name: name };
+  register(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    language: string
+  ) {
+    const data = {
+      UserName: email,
+      Password: password,
+      FirstName: firstName,
+      LastName: lastName,
+      Language: language,
+    };
     return this.http.doPost('account/register', data).pipe(
       map((response: any) => {
         if (response.status !== 200) {

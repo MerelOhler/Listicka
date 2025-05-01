@@ -11,9 +11,14 @@
     @if(register){
     <ion-list>
       <ion-item lines="none">
-        <ion-label position="floating">{{'Name' | translate}}</ion-label>
-        <ion-input [formControl]="name" placeholder="{{'Name' | translate}}" errorText="{{'Invalid name'| translate}}"
-          [clearOnEdit]="false"></ion-input>
+        <ion-label position="floating">{{'First Name' | translate}}</ion-label>
+        <ion-input [formControl]="firstName" placeholder="{{'First Name' | translate}}"
+          errorText="{{'Invalid name'| translate}}" [clearOnEdit]="false"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">{{'Last Name' | translate}}</ion-label>
+        <ion-input [formControl]="lastName" placeholder="{{'Last Name' | translate}}"
+          errorText="{{'Invalid name'| translate}}" [clearOnEdit]="false"></ion-input>
       </ion-item>
       <ion-item lines="none">
         <ion-label position="floating">{{'Email' | translate}}</ion-label>
@@ -48,7 +53,8 @@
         </ion-input>
       </ion-item>
     </ion-list>
-    <ion-button [disabled]="password.valid && email.valid && confirmPassword.valid && name.valid ? null : true"
+    <ion-button
+      [disabled]="!(password.valid && email.valid && confirmPassword.valid && firstName.valid  && lastName.valid)"
       expand="block" type="submit" (click)="registerUser()">{{'Register' |
       translate}} </ion-button>
     <a (click)="register = false">{{'Login' | translate}}</a>

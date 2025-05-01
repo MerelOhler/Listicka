@@ -57,7 +57,9 @@ export class LoginComponent implements OnInit {
   loading = true;
   register: boolean = true;
 
-  name = new FormControl('', [Validators.required]);
+  firstName = new FormControl('', [Validators.required]);
+  lastName = new FormControl('', [Validators.required]);
+
   email = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -109,10 +111,12 @@ export class LoginComponent implements OnInit {
     if (this.validate()) {
       const email = this.email.getRawValue();
       const password = this.password.getRawValue();
-      const name = this.name.getRawValue();
-      if (email && password && name) {
+      const firstName = this.firstName.getRawValue();
+      const lastName = this.lastName.getRawValue();
+      const language = this.appTranslateService.language();
+      if (email && password && firstName && lastName) {
         this.loading = true;
-        this.userService.register(email, password, name).subscribe({
+        this.userService.register(email, password, firstName, lastName, language).subscribe({
           next: () => {
             this.loading = false;
             this.router.navigate(['home']);
@@ -125,8 +129,10 @@ export class LoginComponent implements OnInit {
         this.email.setErrors({ required: true });
       } else if (!password) {
         this.password.setErrors({ required: true });
-      } else if (!name) {
-        this.name.setErrors({ required: true });
+      } else if (!firstName) {
+        this.firstName.setErrors({ required: true });
+      } else if (!lastName) {
+        this.lastName.setErrors({ required: true });
       }
     }
   }
