@@ -1,11 +1,11 @@
 {
     "configurations": [
-        
+              
         {
             "name": "C#: ListickAPI Debug",
             "type": "dotnet",
             "request": "launch",
-            "projectPath": "${workspaceFolder}/ListickAPI.csproj"
+            "projectPath": "${workspaceFolder}/ListickAPI/ListickAPI.csproj"
         },
         {
             "name": ".NET Core Attach",

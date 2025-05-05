@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using ListickAPI.Entities.LookupEntities;
 
 namespace ListickAPI.DataObjects;
 
@@ -12,5 +13,5 @@ public class RegisterDto
 
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
-    public string? Language { get; set; } = null!;
+    public required Language Language { get; set; }
 }

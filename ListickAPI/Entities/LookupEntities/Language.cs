@@ -11,6 +11,9 @@ public class Language
     [MaxLength(50)]
     public string? LanguageName { get; set; } = null!;
 
+    [MaxLength(50)]
+    public string? LanguageNameInLanguage { get; set; } = null!;
+
     [MaxLength(10)]
     public string? LanguageCode { get; set; } = null!;
 
@@ -22,4 +25,6 @@ public class Language
 
     [MaxLength(150)]
     public string? FlagIconUrl { get; set; }
+
+    public bool IsActive { get; set; } = true;
 }

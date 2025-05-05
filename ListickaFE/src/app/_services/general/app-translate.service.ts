@@ -1,11 +1,16 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
+import { AppLanguagesService } from './app-languages.service';
+import { UserService } from '../specific/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppTranslateService {
+  private appLanguagesService = inject(AppLanguagesService);
+  private userService = inject(UserService);
+
   home = signal('Home');
   profile = signal('Profile');
   todo = signal('Todo');
@@ -14,18 +19,30 @@ export class AppTranslateService {
   login = signal('Login');
   register = signal('Register');
   settings = signal('Settings');
-  language = signal('en');
+  language = signal('en-US');
+
+  languages = signal<any>([]);
+  currentLanguage: any = null;
 
   constructor(private translateService: TranslateService) {
-    const localLang = localStorage.getItem('language');
-    if (localLang) {
-      this.translateService.setDefaultLang(localLang);
-      this.language.set(localLang);
-      this.translateService.use(localLang);
-    } else {
-      this.translateService.setDefaultLang('en');
-      this.translateService.use('en');
-    }
+    this.appLanguagesService.getLanguages().subscribe((res: any) => {
+      this.languages.set(res.data);
+      this.setLocalLanguage();
+    });
+  }
+
+  setLocalLanguage() {
+    const localLang =
+      this.userService.currentUser()?.Language?.languageCode ||
+      localStorage.getItem('language') ||
+      'en-US';
+    this.translateService.setDefaultLang(localLang);
+    this.language.set(localLang);
+    this.translateService.use(localLang);
+    this.currentLanguage = this.languages().find(
+      (l: any) => l.languageCode === this.language()
+    );
+    this.setMenuValues();
   }
 
   public getTranslation(key: string): Observable<string> {
@@ -39,6 +56,9 @@ export class AppTranslateService {
   public setLanguage(lang: string): void {
     localStorage.setItem('language', lang);
     this.language.set(lang);
+    this.currentLanguage = this.languages().find(
+      (l: any) => l.languageCode === lang
+    );
     this.translateService.use(lang).subscribe(() => {
       this.setMenuValues();
       this.setNavValues();

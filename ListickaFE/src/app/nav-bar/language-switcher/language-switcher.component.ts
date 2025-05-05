@@ -26,12 +26,8 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class LanguageSwitcherComponent implements OnInit {
   private translateService: AppTranslateService = inject(AppTranslateService);
-  languages = [
-    { code: 'en-US', name: 'English' },
-    { code: 'nl-NL', name: 'Nederlands' },
-    { code: 'cs-CZ', name: 'Čeština' },
-    { code: 'de-DE', name: 'Deutsch' },
-  ];
+
+  languages: any = this.translateService.languages;
   selectedLanguage = this.translateService.language;
   faGlobe = faGlobe;
 

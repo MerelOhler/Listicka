@@ -1,14 +1,14 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../general/http.service';
-import { User } from '../../_models/user';
 import { map } from 'rxjs';
+import { AppTranslateService } from '../general/app-translate.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   private http = inject(HttpService);
-  currentUser = signal<User | null>(null);
+  currentUser = signal<any | null>(null);
 
   getUsers(): any {
     return this.http.doGet('user');
@@ -25,7 +25,7 @@ export class UserService {
         if (response.status !== 200) {
           throw new Error(response.data);
         }
-        const user = response.data as User;
+        const user = response.data;
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
           this.currentUser.set(user);
@@ -44,7 +44,7 @@ export class UserService {
     password: string,
     firstName: string,
     lastName: string,
-    language: string
+    language: any
   ) {
     const data = {
       UserName: email,
@@ -53,12 +53,13 @@ export class UserService {
       LastName: lastName,
       Language: language,
     };
+    debugger;
     return this.http.doPost('account/register', data).pipe(
       map((response: any) => {
         if (response.status !== 200) {
           throw new Error(response.data);
         }
-        const user = response.data as User;
+        const user = response.data;
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
           this.currentUser.set(user);

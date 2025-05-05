@@ -38,7 +38,7 @@ public class LoginUser
     public string? Country { get; set; } = null!;
     public string? TimeZone { get; set; } = null!;
 
-    public Language Language { get; set; } = null!;
+    public virtual Language Language { get; set; } = null!;
     public string? Currency { get; set; } = null!;
     public string? DateFormat { get; set; } = null!;
     public string? TimeFormat { get; set; } = null!;

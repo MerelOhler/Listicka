@@ -88,8 +88,8 @@ namespace ListickAPI.Data.Migrations
                     { 1, "MM/dd/yyyy", null, "en-US", "English (United States)", "hh:mm tt" },
                     { 2, "dd/MM/yyyy", null, "en-GB", "English (United Kingdom)", "HH:mm" },
                     { 3, "dd/MM/yyyy", null, "de-DE", "German (Germany)", "HH:mm" },
-                    { 4, "dd/MM/yyyy", null, "nl-NL", "Italian (Italy)", "HH:mm" },
-                    { 5, "dd/MM/yyyy", null, "cs-CZ", "Portuguese (Brazil)", "HH:mm" },
+                    { 4, "dd/MM/yyyy", null, "nl-NL", "Dutch (Netherlands)", "HH:mm" },
+                    { 5, "dd/MM/yyyy", null, "cs-CZ", "Czech (Czechia)", "HH:mm" },
                 }
             );
         }

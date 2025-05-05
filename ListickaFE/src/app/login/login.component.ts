@@ -92,9 +92,12 @@ export class LoginComponent implements OnInit {
     if (email && password) {
       this.loading = true;
       this.userService.login(email, password).subscribe({
-        next: (response: any) => {
+        next: () => {
           this.loading = false;
           this.router.navigate(['home']);
+          this.appTranslateService.setLanguage(
+            this.userService.currentUser()?.language?.languageCode
+          );
         },
         error: (error: any) => {
           this.handleError(error);
@@ -113,18 +116,20 @@ export class LoginComponent implements OnInit {
       const password = this.password.getRawValue();
       const firstName = this.firstName.getRawValue();
       const lastName = this.lastName.getRawValue();
-      const language = this.appTranslateService.language();
+      const language = this.appTranslateService.currentLanguage;
       if (email && password && firstName && lastName) {
         this.loading = true;
-        this.userService.register(email, password, firstName, lastName, language).subscribe({
-          next: () => {
-            this.loading = false;
-            this.router.navigate(['home']);
-          },
-          error: (error: any) => {
-            this.handleError(error);
-          },
-        });
+        this.userService
+          .register(email, password, firstName, lastName, language)
+          .subscribe({
+            next: () => {
+              this.loading = false;
+              this.router.navigate(['home']);
+            },
+            error: (error: any) => {
+              this.handleError(error);
+            },
+          });
       } else if (!email) {
         this.email.setErrors({ required: true });
       } else if (!password) {

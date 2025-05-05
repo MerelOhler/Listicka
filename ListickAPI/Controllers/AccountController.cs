@@ -1,8 +1,8 @@
 using ListickAPI.Data;
 using ListickAPI.DataObjects;
 using ListickAPI.Entities;
+using ListickAPI.Entities.LookupEntities;
 using ListickAPI.Services.IServices;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,9 +16,9 @@ namespace ListickAPI.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user = await context.LoginUser.FirstOrDefaultAsync(u =>
-                u.UserName == loginDto.UserName.ToLower()
-            );
+            var user = await context
+                .LoginUser.Include(lu => lu.Language)
+                .FirstOrDefaultAsync(u => u.UserName == loginDto.UserName.ToLower());
             if (user == null)
             {
                 return Unauthorized("Invalid username or password");
@@ -80,6 +80,10 @@ namespace ListickAPI.Controllers
                 out byte[] passwordHash,
                 out byte[] passwordSalt
             );
+            Language lang =
+                context.Language.FirstOrDefault(l =>
+                    l.LanguageId == registerDto.Language.LanguageId
+                ) ?? context.Language.FirstOrDefault(l => l.LanguageId == 1)!;
             var user = new LoginUser
             {
                 UserName = registerDto.UserName,
@@ -88,6 +92,7 @@ namespace ListickAPI.Controllers
                 Email = registerDto.UserName,
                 FirstName = registerDto.FirstName,
                 DateCreated = DateTime.UtcNow,
+                Language = lang,
             };
 
             context.LoginUser.Add(user);
