@@ -111,6 +111,39 @@ namespace ListickAPI.Controllers
             );
         }
 
+        [HttpPut("{id}/language")]
+        public async Task<ActionResult<UserDto>> UpdateLanguage(int id, Language language)
+        {
+            var user = await context.LoginUser.FirstOrDefaultAsync(u => u.LoginUserId == id);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var lang = await context.Language.FirstOrDefaultAsync(l =>
+                l.LanguageId == language.LanguageId
+            );
+            if (lang == null)
+            {
+                return NotFound("Language not found");
+            }
+
+            user.Language = lang;
+            await context.SaveChangesAsync();
+            return Ok(
+                new UserDto
+                {
+                    LoginUserId = user.LoginUserId,
+                    UserName = user.UserName,
+                    Token = tokenService.CreateToken(user),
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Language = user.Language,
+                }
+            );
+        }
+
         private void CreatePasswordHash(
             string password,
             out byte[] passwordHash,

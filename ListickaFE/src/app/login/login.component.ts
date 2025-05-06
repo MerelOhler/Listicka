@@ -96,7 +96,8 @@ export class LoginComponent implements OnInit {
           this.loading = false;
           this.router.navigate(['home']);
           this.appTranslateService.setLanguage(
-            this.userService.currentUser()?.language?.languageCode
+            this.userService.currentUser()?.language?.languageCode,
+            false
           );
         },
         error: (error: any) => {

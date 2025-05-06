@@ -1,7 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpService } from '../general/http.service';
 import { map } from 'rxjs';
-import { AppTranslateService } from '../general/app-translate.service';
 
 @Injectable({
   providedIn: 'root',
@@ -53,7 +52,6 @@ export class UserService {
       LastName: lastName,
       Language: language,
     };
-    debugger;
     return this.http.doPost('account/register', data).pipe(
       map((response: any) => {
         if (response.status !== 200) {
@@ -66,5 +64,25 @@ export class UserService {
         }
       })
     );
+  }
+
+  updateUserLanguage() {
+    if (this.currentUser()) {
+      const data = this.currentUser().Language;
+      return this.http
+        .doPut(`account/${this.currentUser().loginUserId}/language`, data)
+        .pipe(
+          map((response: any) => {
+            if (response.status !== 200) {
+              throw new Error(response.data);
+            }
+            const updatedUser = response.data;
+            if (updatedUser) {
+              localStorage.setItem('user', JSON.stringify(updatedUser));
+              this.currentUser.set(updatedUser);
+            }
+          })
+        );
+    }
   }
 }

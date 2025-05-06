@@ -53,7 +53,7 @@ export class AppTranslateService {
     return this.translateService.get(translations);
   }
 
-  public setLanguage(lang: string): void {
+  public setLanguage(lang: string, updateUser: boolean = true): void {
     localStorage.setItem('language', lang);
     this.language.set(lang);
     this.currentLanguage = this.languages().find(
@@ -63,6 +63,10 @@ export class AppTranslateService {
       this.setMenuValues();
       this.setNavValues();
     });
+    if (this.userService.currentUser() && updateUser) {
+      this.userService.currentUser().Language = this.currentLanguage;
+      this.userService.updateUserLanguage().subscribe(() => {});
+    }
   }
 
   setMenuValues() {
