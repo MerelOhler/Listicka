@@ -44,9 +44,9 @@ namespace ListickAPI.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            var existingUser = await context.LoginUser.FirstOrDefaultAsync(u =>
-                u.UserName == registerDto.UserName.ToLower()
-            );
+            var existingUser = await context
+                .LoginUser.Include(lu => lu.Language)
+                .FirstOrDefaultAsync(u => u.UserName == registerDto.UserName.ToLower());
             if (existingUser != null)
             {
                 if (

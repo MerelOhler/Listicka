@@ -19,6 +19,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppTranslateService } from '../_services/general/app-translate.service';
 import { UserService } from '../_services/specific/user.service';
 import { ToastService } from '../_services/general/toast.service';
+import { first } from 'rxjs';
 
 export const StrongPasswordRegx: RegExp =
   /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
@@ -99,6 +100,7 @@ export class LoginComponent implements OnInit {
             this.userService.currentUser()?.language?.languageCode,
             false
           );
+          this.clearValues();
         },
         error: (error: any) => {
           this.handleError(error);
@@ -126,6 +128,11 @@ export class LoginComponent implements OnInit {
             next: () => {
               this.loading = false;
               this.router.navigate(['home']);
+              this.appTranslateService.setLanguage(
+                this.userService.currentUser()?.language?.languageCode,
+                false
+              );
+              this.clearValues();
             },
             error: (error: any) => {
               this.handleError(error);
@@ -175,4 +182,12 @@ export class LoginComponent implements OnInit {
       ? null
       : { notSame: true };
   };
+
+  clearValues() {
+    this.firstName.setValue('');
+    this.lastName.setValue('');
+    this.email.setValue('');
+    this.password.setValue('');
+    this.confirmPassword.setValue('');
+  }
 }
