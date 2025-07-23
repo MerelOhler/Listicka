@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Signal, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   IonList,
   IonItem,
-  IonLabel,
+  IonSelect,
   IonInput,
   IonCard,
   IonCardHeader,
   IonCardContent,
   IonCardTitle,
+  IonSelectOption,
 } from '@ionic/angular/standalone';
 import { TranslateModule } from '@ngx-translate/core';
+import { PriorityService } from 'src/app/_services/specific/priority.service';
 
 @Component({
   selector: 'app-todo-create',
@@ -26,22 +28,12 @@ import { TranslateModule } from '@ngx-translate/core';
     IonCardHeader,
     IonCardContent,
     IonCardTitle,
+    IonSelect,
+    IonSelectOption,
   ],
 })
 export class TodoCreateComponent implements OnInit {
-  importanceOptions = [
-    { value: '1', label: 'Can be skipped' },
-    { value: '2', label: 'Should happen' },
-    {
-      value: '3',
-      label: 'Should be done before deadline but can go over by some days',
-    },
-    {
-      value: '4',
-      label: 'Has to absolutely be done before the next cadence deadline',
-    },
-    { value: '5', label: 'Has to absolutely be done by deadline' },
-  ];
+  private priorityService = inject(PriorityService);
 
   cadenceOptions = [
     { value: '1', label: 'Daily' },
@@ -58,7 +50,7 @@ export class TodoCreateComponent implements OnInit {
 
   title = new FormControl('', [Validators.required]);
   description = new FormControl('', []);
-  importance = new FormControl('', [Validators.required]);
+  priority = new FormControl('', [Validators.required]);
   color = new FormControl('', [Validators.required]);
   dates = new FormControl('', [Validators.required]);
   time = new FormControl('', [Validators.required]);
@@ -68,7 +60,24 @@ export class TodoCreateComponent implements OnInit {
   endDateTime = new FormControl('', []);
   project = new FormControl('', []);
 
+  loading = true;
+  priorities = signal<any[]>([]);
+  selectedPriority = signal<any>(null);
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.priorities = this.priorityService.getPriorities().subscribe({
+      next: (data: any) => {
+        console.log(data.data);
+        this.priorities.set(data.data);
+        this.loading = false;
+        console.log(this.priorities());
+      },
+    });
+  }
+
+  changePriority(event: any) {
+    this.selectedPriority.set(event.detail.value);
+  }
 }

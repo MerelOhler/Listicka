@@ -1,3 +1,4 @@
+@if (!loading) {
 <ion-card>
   <ion-card-header>
     <ion-card-title>{{'Create Todo' | translate}}</ion-card-title>
@@ -12,7 +13,15 @@
         <ion-input [formControl]="description" placeholder="{{'Description' | translate}}"
           [clearOnEdit]="false"></ion-input>
       </ion-item>
+      <ion-select value="{{selectedPriority()}}" (ionChange)="changePriority($event)" interface="popover">
+        @if (priorities().length > 0) {
+        @for(priority of priorities(); track $index){
+        <ion-select-option value="{{priority.priorityCode}}">{{priority.priorityName}}</ion-select-option>
+        }
+        }
+      </ion-select>
 
     </ion-list>
   </ion-card-content>
 </ion-card>
+}

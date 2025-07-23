@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../_services/specific/user.service';
 import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'l-nav-bar',
@@ -25,6 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
     IonButton,
     LanguageSwitcherComponent,
     TranslateModule,
+    RouterLink,
   ],
   standalone: true,
 })
